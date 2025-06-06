@@ -151,7 +151,7 @@ const CustomTooltip = ({
 };
 
 const CustomLegend = () => (
-  <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4 text-xs sm:text-sm">
+  <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4 text-xs sm:text-sm pb-4">
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-purple-500"></div>
       <span className="text-muted-foreground font-medium">Loyal Customers</span>
@@ -185,13 +185,14 @@ const VisitorInsightsChart = () => {
             margin={{
               top: 20,
               right: 10,
-              left: 0,
+              left: 5,
               bottom: 20,
             }}
           >
             <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="hsl(var(--border))"
+              horizontal={true}
+              stroke="#e5e7eb"
+              strokeWidth={2}
               opacity={0.3}
             />
             <XAxis
@@ -230,39 +231,24 @@ const VisitorInsightsChart = () => {
               dataKey="loyalCustomers"
               stroke="#8b5cf6"
               strokeWidth={3}
-              dot={{ fill: "#8b5cf6", strokeWidth: 0, r: 4 }}
-              activeDot={{
-                r: 6,
-                fill: "#8b5cf6",
-                strokeWidth: 2,
-                stroke: "#ffffff",
-              }}
+              dot={false}
+              activeDot={false}
             />
             <Line
               type="monotone"
               dataKey="newCustomers"
               stroke="#ef4444"
               strokeWidth={3}
-              dot={{ fill: "#ef4444", strokeWidth: 0, r: 4 }}
-              activeDot={{
-                r: 6,
-                fill: "#ef4444",
-                strokeWidth: 2,
-                stroke: "#ffffff",
-              }}
+              dot={false}
+              activeDot={false}
             />
             <Line
               type="monotone"
               dataKey="uniqueCustomers"
               stroke="#22c55e"
               strokeWidth={3}
-              dot={{ fill: "#22c55e", strokeWidth: 0, r: 4 }}
-              activeDot={{
-                r: 6,
-                fill: "#22c55e",
-                strokeWidth: 2,
-                stroke: "#ffffff",
-              }}
+              dot={false}
+              activeDot={false}
             />
           </LineChart>
         </ResponsiveContainer>
