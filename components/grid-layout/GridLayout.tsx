@@ -1,0 +1,56 @@
+import { motion } from "framer-motion";
+import { layouts } from "@/constants/layouts.const";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+import GridItem from "./GridItem";
+import RevenueChart from "../charts/RevenueChart";
+import VisitorInsightsChart from "../charts/VisitorInsights";
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
+const componentMap: Record<string, React.ReactElement> = {
+  item1: <RevenueChart />,
+  item2: <p className="text-foreground">Revenue Stats</p>,
+  item3: <p className="text-foreground">Orders Table</p>,
+  item4: <p className="text-foreground">Customers List</p>,
+  item5: <RevenueChart />,
+  item6: <VisitorInsightsChart />,
+  item7: <p className="text-foreground">Performance</p>,
+  item8: <p className="text-foreground">Inventory</p>,
+  item9: <p className="text-foreground">Tasks</p>,
+  item10: <p className="text-foreground">Messages</p>,
+  item11: <p className="text-foreground">Campaign Stats</p>,
+  item12: <p className="text-foreground">Summary</p>,
+};
+
+const GridLayout = () => {
+  return (
+    <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <ResponsiveGridLayout
+        className="layout"
+        layouts={layouts}
+        breakpoints={{ xl: 1280, lg: 1024, md: 768, sm: 640 }}
+        cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
+        rowHeight={60}
+        isDraggable={false}
+        isResizable={false}
+        margin={[16, 16]}
+        containerPadding={[0, 0]}
+      >
+        {layouts.lg.map((item) => (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            key={item.i}
+          >
+            <GridItem>{componentMap[item.i]}</GridItem>
+          </motion.div>
+        ))}
+      </ResponsiveGridLayout>
+    </div>
+  );
+};
+
+export default GridLayout;
