@@ -73,52 +73,55 @@ const UserRegionChart: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-80 sm:h-72  bg-white">
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={120}
-            paddingAngle={4}
-            dataKey="value"
-            onMouseEnter={onPieEnter}
-            onMouseLeave={onPieLeave}
-            animationBegin={0}
-            animationDuration={800}
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={entry.color}
-                style={{
-                  filter:
-                    activeIndex === index ? "brightness(1.1)" : "brightness(1)",
-                  transition: "all 0.3s ease",
-                  cursor: "pointer",
-                }}
-                stroke={activeIndex === index ? entry.color : "transparent"}
-                strokeWidth={activeIndex === index ? 2 : 0}
-              />
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-        </PieChart>
-      </ResponsiveContainer>
-
-      {/* Center Total */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="text-center">
-          <p className="text-2xl sm:text-4xl lg:text-xl font-bold text-foreground">
-            {totalVisitors.toLocaleString()}
-          </p>
-          <p className="text-sm sm:text-base text-muted-foreground font-medium mt-1">
-            Total Visitors
-          </p>
+    <div className=" h-full w-full bg-white">
+      <div className="relative h-[80%]">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={120}
+              paddingAngle={4}
+              dataKey="value"
+              onMouseEnter={onPieEnter}
+              onMouseLeave={onPieLeave}
+              animationBegin={0}
+              animationDuration={800}
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.color}
+                  style={{
+                    filter:
+                      activeIndex === index
+                        ? "brightness(1.1)"
+                        : "brightness(1)",
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
+                  }}
+                  stroke={activeIndex === index ? entry.color : "transparent"}
+                  strokeWidth={activeIndex === index ? 2 : 0}
+                />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="text-center">
+            <p className="text-2xl sm:text-4xl lg:text-xl font-bold text-foreground">
+              {totalVisitors.toLocaleString()}
+            </p>
+            <p className="text-sm sm:text-base text-muted-foreground font-medium mt-1">
+              Total Visitors
+            </p>
+          </div>
         </div>
       </div>
+      {/* Center Total */}
       <CustomLegend />
     </div>
   );
