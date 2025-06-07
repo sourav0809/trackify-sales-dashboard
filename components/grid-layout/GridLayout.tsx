@@ -8,6 +8,7 @@ import RevenueChart from "../charts/RevenueChart";
 import VisitorInsightsChart from "../charts/VisitorInsights";
 import TodayMetrics from "../charts/TodayMetrics";
 import UserRegionChart from "../charts/UserRegionChart";
+import ProductSalesCategoryChart from "../charts/ProductSalesCategoryChart";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -16,7 +17,7 @@ const componentMap: Record<string, React.ReactElement> = {
   item2: <VisitorInsightsChart />,
   item3: <UserRegionChart />,
   item4: <RevenueChart />,
-  item5: <RevenueChart />,
+  item5: <ProductSalesCategoryChart />,
   item6: <VisitorInsightsChart />,
   item7: <p className="text-foreground">Performance</p>,
   item8: <p className="text-foreground">Inventory</p>,
