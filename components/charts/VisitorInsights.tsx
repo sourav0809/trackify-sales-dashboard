@@ -9,81 +9,7 @@ import {
   Tooltip,
 } from "recharts";
 import { Users, UserPlus, Eye } from "lucide-react";
-
-const data = [
-  {
-    month: "Jan",
-    loyalCustomers: 320,
-    newCustomers: 280,
-    uniqueCustomers: 340,
-  },
-  {
-    month: "Feb",
-    loyalCustomers: 280,
-    newCustomers: 200,
-    uniqueCustomers: 320,
-  },
-  {
-    month: "Mar",
-    loyalCustomers: 350,
-    newCustomers: 180,
-    uniqueCustomers: 380,
-  },
-  {
-    month: "Apr",
-    loyalCustomers: 200,
-    newCustomers: 160,
-    uniqueCustomers: 280,
-  },
-  {
-    month: "May",
-    loyalCustomers: 180,
-    newCustomers: 140,
-    uniqueCustomers: 220,
-  },
-  {
-    month: "Jun",
-    loyalCustomers: 280,
-    newCustomers: 200,
-    uniqueCustomers: 300,
-  },
-  {
-    month: "Jul",
-    loyalCustomers: 320,
-    newCustomers: 240,
-    uniqueCustomers: 350,
-  },
-  {
-    month: "Aug",
-    loyalCustomers: 380,
-    newCustomers: 380,
-    uniqueCustomers: 340,
-  },
-  {
-    month: "Sept",
-    loyalCustomers: 320,
-    newCustomers: 340,
-    uniqueCustomers: 320,
-  },
-  {
-    month: "Oct",
-    loyalCustomers: 280,
-    newCustomers: 300,
-    uniqueCustomers: 280,
-  },
-  {
-    month: "Nov",
-    loyalCustomers: 200,
-    newCustomers: 180,
-    uniqueCustomers: 220,
-  },
-  {
-    month: "Dec",
-    loyalCustomers: 160,
-    newCustomers: 140,
-    uniqueCustomers: 180,
-  },
-];
+import { visitorInsightsData } from "@/constants/chartData.const";
 
 const CustomTooltip = ({
   active,
@@ -181,7 +107,7 @@ const VisitorInsightsChart = () => {
       <div className="w-full h-64 sm:h-80 lg:h-96">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={data}
+            data={visitorInsightsData}
             margin={{
               top: 20,
               right: 10,

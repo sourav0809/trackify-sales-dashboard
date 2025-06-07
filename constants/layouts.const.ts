@@ -1,9 +1,9 @@
 export const layouts = {
   xl: [
-    { i: "item1", x: 0, y: 0, w: 3, h: 2 },
-    { i: "item2", x: 3, y: 0, w: 3, h: 2 },
-    { i: "item3", x: 6, y: 0, w: 3, h: 2 },
-    { i: "item4", x: 9, y: 0, w: 3, h: 2 },
+    { i: "item1", x: 0, y: 0, w: 6, h: 5 },
+    { i: "item2", x: 6, y: 0, w: 6, h: 7 },
+    { i: "item3", x: 12, y: 0, w: 3, h: 5 },
+    { i: "item4", x: 12, y: 0, w: 3, h: 2 },
     { i: "item5", x: 0, y: 2, w: 6, h: 7 },
     { i: "item6", x: 6, y: 2, w: 6, h: 7 },
     { i: "item7", x: 0, y: 6, w: 4, h: 3 },

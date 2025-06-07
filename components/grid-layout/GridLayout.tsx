@@ -6,13 +6,15 @@ import "react-resizable/css/styles.css";
 import GridItem from "./GridItem";
 import RevenueChart from "../charts/RevenueChart";
 import VisitorInsightsChart from "../charts/VisitorInsights";
+import TodayMetrics from "../charts/TodayMetrics";
+import UserRegionChart from "../charts/UserRegionChart";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const componentMap: Record<string, React.ReactElement> = {
-  item1: <RevenueChart />,
-  item2: <p className="text-foreground">Revenue Stats</p>,
-  item3: <p className="text-foreground">Orders Table</p>,
+  item1: <TodayMetrics />,
+  item2: <VisitorInsightsChart />,
+  item3: <UserRegionChart />,
   item4: <p className="text-foreground">Customers List</p>,
   item5: <RevenueChart />,
   item6: <VisitorInsightsChart />,
