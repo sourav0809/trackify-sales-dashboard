@@ -81,9 +81,9 @@ const UserRegionChart: React.FC = () => {
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={60}
+              innerRadius={80}
               outerRadius={120}
-              paddingAngle={4}
+              paddingAngle={6}
               dataKey="value"
               onMouseEnter={onPieEnter}
               onMouseLeave={onPieLeave}

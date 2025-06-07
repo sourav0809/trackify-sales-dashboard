@@ -15,7 +15,7 @@ const componentMap: Record<string, React.ReactElement> = {
   item1: <TodayMetrics />,
   item2: <VisitorInsightsChart />,
   item3: <UserRegionChart />,
-  item4: <p className="text-foreground">Customers List</p>,
+  item4: <RevenueChart />,
   item5: <RevenueChart />,
   item6: <VisitorInsightsChart />,
   item7: <p className="text-foreground">Performance</p>,
@@ -35,8 +35,8 @@ const GridLayout = () => {
         breakpoints={{ xl: 1280, lg: 1024, md: 768, sm: 640 }}
         cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
         rowHeight={60}
-        isDraggable={false}
-        isResizable={false}
+        isDraggable={true}
+        isResizable={true}
         margin={[16, 16]}
         containerPadding={[0, 0]}
       >
