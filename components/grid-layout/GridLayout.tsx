@@ -15,7 +15,6 @@ import ConversionFunnelChart from "../charts/ConversionFunnelChart";
 import TopProducts from "../charts/TopProducts";
 import ReturnVsDeliveredChart from "../charts/ReturnVsDeliveredChart";
 import ProductBubbleChart from "../charts/ProductBubbleChart";
-import SalesGaugeChart from "../charts/SalesGaugeChart";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -32,7 +31,7 @@ const componentMap: Record<string, React.ReactElement> = {
   item10: <p>Customer Flow Chart</p>,
   item11: <TopProducts />,
   item12: <ReturnVsDeliveredChart />,
-  item13: <SalesGaugeChart />,
+  item13: <p>Hi there </p>,
   item14: <ReturnVsDeliveredChart />,
 };
 
