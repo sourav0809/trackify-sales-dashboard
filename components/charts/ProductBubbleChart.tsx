@@ -7,6 +7,7 @@ import {
   ZAxis,
   ResponsiveContainer,
   Tooltip,
+  CartesianGrid,
 } from "recharts";
 
 interface ProductData {
@@ -220,6 +221,7 @@ const ProductBubbleChart = () => {
               left: 20,
             }}
           >
+            <CartesianGrid stroke="#e2e8f0" strokeDasharray="6" />
             <XAxis
               type="number"
               dataKey="unitsSold"
@@ -258,6 +260,7 @@ const ProductBubbleChart = () => {
               name="Popularity"
             />
             <Tooltip content={<CustomTooltip />} />
+
             {dummyData.map((item, index) => (
               <Scatter key={index} data={[item]} fill={item.color} />
             ))}
