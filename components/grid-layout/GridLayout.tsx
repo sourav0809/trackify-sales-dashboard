@@ -52,7 +52,7 @@ const GridLayout = () => {
         layouts={layouts}
         breakpoints={{ xl: 1280, lg: 1024, md: 768, sm: 640 }}
         cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
-        rowHeight={60}
+        rowHeight={10}
         isDraggable={true}
         isResizable={true}
         margin={[16, 16]}
