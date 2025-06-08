@@ -15,6 +15,9 @@ import ConversionFunnelChart from "../charts/ConversionFunnelChart";
 import TopProducts from "../charts/TopProducts";
 import ReturnVsDeliveredChart from "../charts/ReturnVsDeliveredChart";
 import ProductBubbleChart from "../charts/ProductBubbleChart";
+import ProductPerformanceRadar from "../charts/ProductPerformanceRadar";
+import SalesTrendsComposed from "../charts/SalesTrendsComposed";
+import { useState } from "react";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -28,14 +31,20 @@ const componentMap: Record<string, React.ReactElement> = {
   item7: <InventoryLevelsChart />,
   item8: <OrderFulfillmentChart />,
   item9: <ConversionFunnelChart />,
-  item10: <p>Customer Flow Chart</p>,
+  item10: <ProductPerformanceRadar />,
   item11: <TopProducts />,
   item12: <ReturnVsDeliveredChart />,
   item13: <p>Hi there </p>,
-  item14: <ReturnVsDeliveredChart />,
+  item14: <SalesTrendsComposed />,
 };
 
 const GridLayout = () => {
+  const [breakpoint, setBreakpoint] = useState("lg");
+
+  const handleBreakpointChange = (newBreakpoint: string) => {
+    setBreakpoint(newBreakpoint);
+  };
+  console.log("Breakpoint", breakpoint);
   return (
     <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <ResponsiveGridLayout
@@ -48,11 +57,12 @@ const GridLayout = () => {
         isResizable={true}
         margin={[16, 16]}
         containerPadding={[0, 0]}
+        onBreakpointChange={handleBreakpointChange}
         onLayoutChange={(value) => {
           console.log(value);
         }}
       >
-        {layouts.lg.map((item) => (
+        {layouts[breakpoint].map((item) => (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
