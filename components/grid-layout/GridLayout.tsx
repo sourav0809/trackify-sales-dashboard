@@ -12,6 +12,7 @@ import ProductSalesCategoryChart from "../charts/ProductSalesCategoryChart";
 import InventoryLevelsChart from "../charts/InventoryLevelsChart";
 import OrderFulfillmentChart from "../charts/OrderFulfillmentChart";
 import ConversionFunnelChart from "../charts/ConversionFunnelChart";
+import TopProducts from "../charts/TopProducts";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -26,7 +27,7 @@ const componentMap: Record<string, React.ReactElement> = {
   item8: <OrderFulfillmentChart />,
   item9: <ConversionFunnelChart />,
   item10: <p className="text-foreground">Summary</p>,
-  item11: <p className="text-foreground">Campaign Stats</p>,
+  item11: <TopProducts />,
   item12: <p className="text-foreground">Summary</p>,
 };
 
