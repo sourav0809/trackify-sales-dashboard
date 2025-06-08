@@ -13,9 +13,9 @@ import InventoryLevelsChart from "../charts/InventoryLevelsChart";
 import OrderFulfillmentChart from "../charts/OrderFulfillmentChart";
 import ConversionFunnelChart from "../charts/ConversionFunnelChart";
 import TopProducts from "../charts/TopProducts";
-import CustomerFlowChart from "../charts/CustomerFlowChart";
 import ReturnVsDeliveredChart from "../charts/ReturnVsDeliveredChart";
 import ProductBubbleChart from "../charts/ProductBubbleChart";
+import SalesGaugeChart from "../charts/SalesGaugeChart";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -29,9 +29,11 @@ const componentMap: Record<string, React.ReactElement> = {
   item7: <InventoryLevelsChart />,
   item8: <OrderFulfillmentChart />,
   item9: <ConversionFunnelChart />,
-  item10: <CustomerFlowChart />,
+  item10: <p>Customer Flow Chart</p>,
   item11: <TopProducts />,
   item12: <ReturnVsDeliveredChart />,
+  item13: <SalesGaugeChart />,
+  item14: <ReturnVsDeliveredChart />,
 };
 
 const GridLayout = () => {
@@ -47,6 +49,9 @@ const GridLayout = () => {
         isResizable={true}
         margin={[16, 16]}
         containerPadding={[0, 0]}
+        onLayoutChange={(value) => {
+          console.log(value);
+        }}
       >
         {layouts.lg.map((item) => (
           <motion.div

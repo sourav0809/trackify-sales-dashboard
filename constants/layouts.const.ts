@@ -12,6 +12,8 @@ export const layouts = {
     { i: "item10", x: 0, y: 9, w: 8, h: 2 },
     { i: "item11", x: 8, y: 9, w: 4, h: 2 },
     { i: "item12", x: 0, y: 11, w: 12, h: 3 },
+    { i: "item13", x: 0, y: 11, w: 12, h: 3 },
+    { i: "item14", x: 0, y: 11, w: 12, h: 3 },
   ],
   lg: [
     { i: "item1", x: 0, y: 0, w: 3, h: 2 },
@@ -26,6 +28,8 @@ export const layouts = {
     { i: "item10", x: 0, y: 9, w: 8, h: 2 },
     { i: "item11", x: 8, y: 9, w: 4, h: 2 },
     { i: "item12", x: 0, y: 11, w: 12, h: 3 },
+    { i: "item13", x: 0, y: 11, w: 12, h: 3 },
+    { i: "item14", x: 0, y: 11, w: 12, h: 3 },
   ],
   md: [
     { i: "item1", x: 0, y: 0, w: 6, h: 2 },
@@ -40,6 +44,8 @@ export const layouts = {
     { i: "item10", x: 0, y: 18, w: 8, h: 2 },
     { i: "item11", x: 8, y: 18, w: 4, h: 2 },
     { i: "item12", x: 0, y: 20, w: 12, h: 3 },
+    { i: "item13", x: 0, y: 11, w: 12, h: 3 },
+    { i: "item14", x: 0, y: 11, w: 12, h: 3 },
   ],
   sm: [
     { i: "item1", x: 0, y: 0, w: 12, h: 2 },
@@ -54,5 +60,7 @@ export const layouts = {
     { i: "item10", x: 0, y: 25, w: 12, h: 2 },
     { i: "item11", x: 0, y: 27, w: 12, h: 2 },
     { i: "item12", x: 0, y: 29, w: 12, h: 3 },
+    { i: "item13", x: 0, y: 11, w: 12, h: 3 },
+    { i: "item14", x: 0, y: 11, w: 12, h: 3 },
   ],
 };

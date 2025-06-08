@@ -94,7 +94,7 @@ const CustomLegend: React.FC = () => (
 
 const RevenueChart: React.FC = () => {
   return (
-    <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-5 shadow-sm border border-border w-full ">
+    <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-5 shadow-sm border border-border w-full h-full ">
       <div className="mb-6 mt-4">
         <h2 className="text-xl sm:text-xl font-medium text-[#625b71]">
           Total Revenue
