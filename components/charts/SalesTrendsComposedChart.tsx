@@ -236,7 +236,7 @@ const CustomLegend = ({
   );
 };
 
-const SalesTrendsComposed = () => {
+const SalesTrendsComposedChart = () => {
   const [activeMetric, setActiveMetric] = useState<string | null>(null);
 
   const currentMonth = salesTrendsData[salesTrendsData.length - 1];
@@ -441,4 +441,4 @@ const SalesTrendsComposed = () => {
   );
 };
 
-export default SalesTrendsComposed;
+export default SalesTrendsComposedChart;

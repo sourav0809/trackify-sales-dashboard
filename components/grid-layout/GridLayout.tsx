@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { layouts } from "@/constants/layouts.const";
+import { gridLayouts } from "@/constants/gridLayouts.const";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -13,29 +13,28 @@ import InventoryLevelsChart from "../charts/InventoryLevelsChart";
 import OrderFulfillmentChart from "../charts/OrderFulfillmentChart";
 import ConversionFunnelChart from "../charts/ConversionFunnelChart";
 import TopProducts from "../charts/TopProducts";
-import ReturnVsDeliveredChart from "../charts/ReturnVsDeliveredChart";
+import OrderStatusDistributionChart from "../charts/OrderStatusDistributionChart";
 import ProductBubbleChart from "../charts/ProductBubbleChart";
-import ProductPerformanceRadar from "../charts/ProductPerformanceRadar";
-import SalesTrendsComposed from "../charts/SalesTrendsComposed";
+import ProductPerformanceRadarChart from "../charts/ProductPerformanceRadarChart";
+import SalesTrendsComposedChart from "../charts/SalesTrendsComposedChart";
 import { useState } from "react";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const componentMap: Record<string, React.ReactElement> = {
-  item1: <TodayMetrics />,
-  item2: <VisitorInsightsChart />,
-  item3: <UserRegionChart />,
-  item4: <RevenueChart />,
-  item5: <ProductSalesCategoryChart />,
-  item6: <ProductBubbleChart />,
-  item7: <InventoryLevelsChart />,
-  item8: <OrderFulfillmentChart />,
-  item9: <ConversionFunnelChart />,
-  item10: <ProductPerformanceRadar />,
-  item11: <TopProducts />,
-  item12: <ReturnVsDeliveredChart />,
-  item13: <p>Hi there </p>,
-  item14: <SalesTrendsComposed />,
+  todayMetricsChart: <TodayMetrics />,
+  visitorInsightChart: <VisitorInsightsChart />,
+  userRegionChart: <UserRegionChart />,
+  revenueChart: <RevenueChart />,
+  productSalesCategoryChart: <ProductSalesCategoryChart />,
+  productBubbleChart: <ProductBubbleChart />,
+  inventoryLevelChart: <InventoryLevelsChart />,
+  orderFulfillmentChart: <OrderFulfillmentChart />,
+  conversionFunnelChart: <ConversionFunnelChart />,
+  productPerformanceRadarChart: <ProductPerformanceRadarChart />,
+  topProducts: <TopProducts />,
+  orderStatusDistributionChart: <OrderStatusDistributionChart />,
+  salesTrendsComposedChart: <SalesTrendsComposedChart />,
 };
 
 const GridLayout = () => {
@@ -49,7 +48,7 @@ const GridLayout = () => {
     <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <ResponsiveGridLayout
         className="layout"
-        layouts={layouts}
+        layouts={gridLayouts}
         breakpoints={{ xl: 1280, lg: 1024, md: 768, sm: 640 }}
         cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
         rowHeight={10}
@@ -62,7 +61,7 @@ const GridLayout = () => {
           console.log(value);
         }}
       >
-        {layouts[breakpoint].map((item) => (
+        {gridLayouts[breakpoint].map((item) => (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

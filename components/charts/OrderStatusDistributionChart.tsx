@@ -140,7 +140,7 @@ const CustomLegend = ({
   );
 };
 
-const ReturnVsDeliveredChart = () => {
+const OrderStatusDistributionChart = () => {
   return (
     <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm border border-border w-full h-full">
       <h2 className="text-xl font-medium text-[#625b71] mb-8">
@@ -211,4 +211,4 @@ const ReturnVsDeliveredChart = () => {
   );
 };
 
-export default ReturnVsDeliveredChart;
+export default OrderStatusDistributionChart;

@@ -84,7 +84,10 @@ const CustomTooltip = ({
         </div>
         <div className="space-y-2">
           {payload.map((item, index) => (
-            <div key={index} className="flex items-center justify-between gap-4">
+            <div
+              key={index}
+              className="flex items-center justify-between gap-4"
+            >
               <div className="flex items-center gap-2">
                 <div
                   className="w-3 h-3 rounded-full"
@@ -148,7 +151,7 @@ const CustomLegend = ({
   );
 };
 
-const ProductPerformanceRadar = () => {
+const ProductPerformanceRadarChart = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -167,7 +170,10 @@ const ProductPerformanceRadar = () => {
 
       <div className="h-[300px] sm:h-[400px] lg:h-[500px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <RadarChart data={performanceData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
+          <RadarChart
+            data={performanceData}
+            margin={{ top: 20, right: 30, bottom: 20, left: 30 }}
+          >
             <PolarGrid
               stroke="#e5e7eb"
               strokeWidth={1}
@@ -229,4 +235,4 @@ const ProductPerformanceRadar = () => {
   );
 };
 
-export default ProductPerformanceRadar;
+export default ProductPerformanceRadarChart;
