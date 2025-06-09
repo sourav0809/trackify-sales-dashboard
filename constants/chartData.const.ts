@@ -123,3 +123,37 @@ export const visitorInsightsData: VisitorInsightData[] = [
     uniqueCustomers: 180,
   },
 ];
+
+export interface MetricData {
+  id: number;
+  title: string;
+  value: string;
+  subtitle: string;
+}
+
+export const metricsData: MetricData[] = [
+  {
+    id: 1,
+    title: "Total Sales",
+    value: "$1k",
+    subtitle: "+8.7% from yesterday",
+  },
+  {
+    id: 2,
+    title: "Total Order",
+    value: "300",
+    subtitle: "+5.9% from yesterday",
+  },
+  {
+    id: 3,
+    title: "Product Sold",
+    value: "5",
+    subtitle: "+1.2% from yesterday",
+  },
+  {
+    id: 4,
+    title: "New Customers",
+    value: "8",
+    subtitle: "+0.5% from yesterday",
+  },
+];
