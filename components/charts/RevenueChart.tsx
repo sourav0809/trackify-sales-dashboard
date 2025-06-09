@@ -88,7 +88,7 @@ const RevenueChart: React.FC = () => {
         </div>
 
         {/* Legend */}
-        <div className="pt-1 py-2">
+        <div className="pt-1 py-2 ">
           <CustomLegend />
         </div>
       </div>
@@ -147,7 +147,7 @@ const CustomTooltipContent = ({
 };
 
 const CustomLegend: React.FC = () => (
-  <div className="flex items-center justify-center gap-6 w-full">
+  <div className="flex items-center justify-center gap-6 w-full text-xs sm:text-[0.8rem]">
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 rounded-full bg-blue-500"></div>
       <span className="text-sm text-muted-foreground font-medium">

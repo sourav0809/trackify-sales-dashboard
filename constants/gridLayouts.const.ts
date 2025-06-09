@@ -33,7 +33,7 @@ export const gridLayouts = {
     { i: "todayMetricsChart", x: 0, y: 0, w: 6, h: 2 },
     { i: "visitorInsightChart", x: 6, y: 0, w: 6, h: 2 },
     { i: "userRegionChart", x: 0, y: 2, w: 6, h: 2 },
-    { i: "revenueChart", x: 6, y: 2, w: 6, h: 15, minH: 14, minW: 5 },
+    { i: "revenueChart", x: 6, y: 2, w: 12, h: 15, minH: 14, minW: 5 },
     { i: "productSalesCategoryChart", x: 0, y: 4, w: 12, h: 4 },
     { i: "productBubbleChart", x: 0, y: 8, w: 12, h: 4 },
     { i: "inventoryLevelChart", x: 0, y: 12, w: 6, h: 3 },

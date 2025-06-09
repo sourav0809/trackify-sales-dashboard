@@ -11,6 +11,121 @@ import {
 import { Users, UserPlus, Eye } from "lucide-react";
 import { visitorInsightsData } from "@/constants/chartData.const";
 
+const VisitorInsightsChart = () => {
+  return (
+    <div className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col">
+      <div className="mb-6">
+        <h2 className="text-lg primary-heading"> Visitor Insights</h2>
+      </div>
+
+      <div className="flex-1 flex flex-col gap-2">
+        {/* Chart */}
+        <div className="flex-1">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={visitorInsightsData}
+              margin={{
+                top: 20,
+                right: 10,
+                left: 5,
+                bottom: 20,
+              }}
+            >
+              <CartesianGrid
+                horizontal={true}
+                stroke="#e5e7eb"
+                strokeWidth={2}
+                opacity={0.3}
+              />
+              <XAxis
+                dataKey="month"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fontSize: 12,
+                  fill: "hsl(var(--muted-foreground))",
+                  fontWeight: 500,
+                }}
+                className="text-xs sm:text-sm"
+              />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fontSize: 12,
+                  fill: "hsl(var(--muted-foreground))",
+                  fontWeight: 500,
+                }}
+                domain={[0, 400]}
+                ticks={[0, 100, 200, 300, 400]}
+                className="text-xs sm:text-sm"
+              />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{
+                  stroke: "hsl(var(--border))",
+                  strokeWidth: 1,
+                  strokeDasharray: "4 4",
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="loyalCustomers"
+                stroke="#8b5cf6"
+                strokeWidth={3}
+                dot={false}
+                activeDot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="newCustomers"
+                stroke="#ef4444"
+                strokeWidth={3}
+                dot={false}
+                activeDot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="uniqueCustomers"
+                stroke="#22c55e"
+                strokeWidth={3}
+                dot={false}
+                activeDot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Legend */}
+        <div className="pt-1 py-2">
+          <CustomLegend />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default VisitorInsightsChart;
+
+const CustomLegend = () => (
+  <div className="flex items-center justify-center gap-6 w-ful text-xs sm:text-[0.8rem] flex-wrap ">
+    <div className="flex items-center gap-2">
+      <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-purple-500"></div>
+      <span className="text-muted-foreground font-medium">Loyal Customers</span>
+    </div>
+    <div className="flex items-center gap-2">
+      <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-red-500"></div>
+      <span className="text-muted-foreground font-medium">New Customers</span>
+    </div>
+    <div className="flex items-center gap-2">
+      <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-green-500"></div>
+      <span className="text-muted-foreground font-medium">
+        Unique Customers
+      </span>
+    </div>
+  </div>
+);
+
 const CustomTooltip = ({
   active,
   payload,
@@ -75,114 +190,3 @@ const CustomTooltip = ({
   }
   return null;
 };
-
-const CustomLegend = () => (
-  <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4 text-xs sm:text-sm pb-4">
-    <div className="flex items-center gap-2">
-      <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-purple-500"></div>
-      <span className="text-muted-foreground font-medium">Loyal Customers</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-red-500"></div>
-      <span className="text-muted-foreground font-medium">New Customers</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-green-500"></div>
-      <span className="text-muted-foreground font-medium">
-        Unique Customers
-      </span>
-    </div>
-  </div>
-);
-
-const VisitorInsightsChart = () => {
-  return (
-    <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-5 shadow-sm border border-border w-full h-full ">
-      <div className="mb-6 mt-4">
-        <h2 className="text-xl sm:text-xl font-medium text-[#625b71]">
-          Visitor Insights
-        </h2>
-      </div>
-
-      <div className="w-full h-64 sm:h-80 lg:h-96">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={visitorInsightsData}
-            margin={{
-              top: 20,
-              right: 10,
-              left: 5,
-              bottom: 20,
-            }}
-          >
-            <CartesianGrid
-              horizontal={true}
-              stroke="#e5e7eb"
-              strokeWidth={2}
-              opacity={0.3}
-            />
-            <XAxis
-              dataKey="month"
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fontSize: 12,
-                fill: "hsl(var(--muted-foreground))",
-                fontWeight: 500,
-              }}
-              className="text-xs sm:text-sm"
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fontSize: 12,
-                fill: "hsl(var(--muted-foreground))",
-                fontWeight: 500,
-              }}
-              domain={[0, 400]}
-              ticks={[0, 100, 200, 300, 400]}
-              className="text-xs sm:text-sm"
-            />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={{
-                stroke: "hsl(var(--border))",
-                strokeWidth: 1,
-                strokeDasharray: "4 4",
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="loyalCustomers"
-              stroke="#8b5cf6"
-              strokeWidth={3}
-              dot={false}
-              activeDot={false}
-            />
-            <Line
-              type="monotone"
-              dataKey="newCustomers"
-              stroke="#ef4444"
-              strokeWidth={3}
-              dot={false}
-              activeDot={false}
-            />
-            <Line
-              type="monotone"
-              dataKey="uniqueCustomers"
-              stroke="#22c55e"
-              strokeWidth={3}
-              dot={false}
-              activeDot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-
-      <CustomLegend />
-    </div>
-  );
-};
-
-export default VisitorInsightsChart;
