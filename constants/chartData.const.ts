@@ -454,3 +454,42 @@ export const productPerformanceStatistics: ProductPerformanceStatics[] = [
     target: 80,
   },
 ];
+
+interface TopProducts {
+  id: string;
+  name: string;
+  popularity: number;
+  sales: number;
+  color: string;
+}
+
+export const topProducts: TopProducts[] = [
+  {
+    id: "01",
+    name: "Designer Denim Collection",
+    popularity: 85,
+    sales: 45,
+    color: "#3b82f6",
+  },
+  {
+    id: "02",
+    name: "Summer Maxi Dresses",
+    popularity: 75,
+    sales: 29,
+    color: "#34d399",
+  },
+  {
+    id: "03",
+    name: "Luxury Handbags",
+    popularity: 65,
+    sales: 18,
+    color: "#a78bfa",
+  },
+  {
+    id: "04",
+    name: "Athletic Wear Set",
+    popularity: 45,
+    sales: 23,
+    color: "#fbbf24",
+  },
+];

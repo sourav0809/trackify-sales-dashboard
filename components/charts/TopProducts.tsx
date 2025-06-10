@@ -1,51 +1,26 @@
 import React from "react";
 import { ResponsiveContainer } from "recharts";
-
-interface Product {
-  id: string;
-  name: string;
-  popularity: number;
-  sales: number;
-  color: string;
-}
-
-const dummyData: Product[] = [
-  {
-    id: "01",
-    name: "Designer Denim Collection",
-    popularity: 85,
-    sales: 45,
-    color: "#3b82f6",
-  },
-  {
-    id: "02",
-    name: "Summer Maxi Dresses",
-    popularity: 75,
-    sales: 29,
-    color: "#34d399",
-  },
-  {
-    id: "03",
-    name: "Luxury Handbags",
-    popularity: 65,
-    sales: 18,
-    color: "#a78bfa",
-  },
-  {
-    id: "04",
-    name: "Athletic Wear Set",
-    popularity: 45,
-    sales: 23,
-    color: "#fbbf24",
-  },
-];
+import { motion } from "framer-motion";
+import { topProducts } from "@/constants/chartData.const";
 
 const TopProducts = () => {
   return (
-    <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm border border-border w-full h-full">
-      <h2 className="text-xl font-medium text-[#1d1b20] mb-8">Top Products</h2>
+    <motion.div
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="pb-6 flex items-center h-[4rem]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="text-lg primary-heading">Top Products</h2>
+      </motion.div>
 
-      <div className="h-full w-full">
+      <div className="h-full w-full px-4">
         <ResponsiveContainer width="100%" height="100%">
           <div className="space-y-8">
             <div className="grid grid-cols-12 text-sm text-[#625b71]">
@@ -55,7 +30,7 @@ const TopProducts = () => {
               <div className="col-span-2 text-right">Sales</div>
             </div>
 
-            {dummyData.map((product) => (
+            {topProducts.map((product) => (
               <div
                 key={product.id}
                 className="grid grid-cols-12 items-center text-sm"
@@ -91,7 +66,7 @@ const TopProducts = () => {
           </div>
         </ResponsiveContainer>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
