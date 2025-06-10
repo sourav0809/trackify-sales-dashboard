@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { motion } from "framer-motion";
 
 const radarData = [
   {
@@ -99,92 +100,124 @@ const CustomTooltip = ({
 
 const ProductSalesCategoryChart = () => {
   return (
-    <div className=" h-full w-full bg-white">
-      <div className="relative h-[80%]">
-        <ResponsiveContainer width="100%" height="100%">
-          <RadarChart
-            data={radarData}
-            margin={{ top: 30, right: 40, bottom: 30, left: 40 }}
-          >
-            <PolarGrid
-              className="stroke-slate-200"
-              strokeWidth={1}
-              radialLines={true}
-            />
-            <PolarAngleAxis
-              dataKey="category"
-              tick={{
-                fontSize: 11,
-                fill: "#64748b",
-                fontWeight: 500,
-              }}
-              className="text-sm font-medium"
-            />
-            <PolarRadiusAxis
-              angle={45}
-              domain={[0, 100]}
-              tick={{ fontSize: 9, fill: "#64748b" }}
-              className="text-xs"
-              tickCount={4}
-            />
-            <Radar
-              name="Current Month"
-              dataKey="currentMonth"
-              stroke="#3b82f6"
-              fill="#3b82f6"
-              fillOpacity={0.15}
-              strokeWidth={3}
-            />
-            <Radar
-              name="Previous Month"
-              dataKey="previousMonth"
-              stroke="#34d399"
-              fill="#34d399"
-              fillOpacity={0.1}
-              strokeWidth={2}
-            />
-            <Radar
-              name="Target"
-              dataKey="target"
-              stroke="#8b5cf6"
-              fill="#8b5cf6"
-              fillOpacity={0.08}
-              strokeWidth={2}
-            />
-            <Tooltip content={<CustomTooltip />} />
-          </RadarChart>
-        </ResponsiveContainer>
+    <motion.div
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Title */}
+      <motion.div
+        className="pb-6 flex items-center h-[4rem]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="text-lg primary-heading">Total Revenue</h2>
+      </motion.div>
+
+      {/* Chart + Legend container */}
+      <div className="flex flex-col h-[calc(100%-7rem)]">
+        {/* Chart */}
+        <motion.div
+          className="h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <RadarChart
+              data={radarData}
+              margin={{ top: 30, right: 40, bottom: 30, left: 40 }}
+            >
+              <PolarGrid
+                className="stroke-slate-200"
+                strokeWidth={1}
+                radialLines={true}
+              />
+              <PolarAngleAxis
+                dataKey="category"
+                tick={{
+                  fontSize: 11,
+                  fill: "#64748b",
+                  fontWeight: 500,
+                }}
+                className="text-sm font-medium"
+              />
+              <PolarRadiusAxis
+                angle={45}
+                domain={[0, 100]}
+                tick={{ fontSize: 9, fill: "#64748b" }}
+                className="text-xs"
+                tickCount={4}
+              />
+              <Radar
+                name="Current Month"
+                dataKey="currentMonth"
+                stroke="#3b82f6"
+                fill="#3b82f6"
+                fillOpacity={0.15}
+                strokeWidth={3}
+              />
+              <Radar
+                name="Previous Month"
+                dataKey="previousMonth"
+                stroke="#34d399"
+                fill="#34d399"
+                fillOpacity={0.1}
+                strokeWidth={2}
+              />
+              <Radar
+                name="Target"
+                dataKey="target"
+                stroke="#8b5cf6"
+                fill="#8b5cf6"
+                fillOpacity={0.08}
+                strokeWidth={2}
+              />
+              <Tooltip content={<CustomTooltip />} />
+            </RadarChart>
+          </ResponsiveContainer>
+        </motion.div>
       </div>
 
-      {/* Modern Legend */}
-      <div className="flex flex-wrap justify-center gap-6 mt-4 px-6">
-        <div className="flex items-center gap-2">
-          <div
-            className="w-4 h-1 rounded-full"
-            style={{ backgroundColor: "#3b82f6" }}
-          />
-          <span className="text-xs font-medium text-foreground">
-            Current Month
-          </span>
+      {/* Legend */}
+      <motion.div
+        className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        {/* Modern Legend */}
+        <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex items-center gap-2">
+            <div
+              className="w-4 h-1 rounded-full"
+              style={{ backgroundColor: "#3b82f6" }}
+            />
+            <span className="text-sm font-medium text-foreground">
+              Current Month
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div
+              className="w-4 h-1 rounded-full"
+              style={{ backgroundColor: "#34d399" }}
+            />
+            <span className="text-sm font-medium text-foreground">
+              Previous Month
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div
+              className="w-4 h-1 rounded-full"
+              style={{ backgroundColor: "#8b5cf6" }}
+            />
+            <span className="text-sm font-medium text-foreground">Target</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div
-            className="w-4 h-1 rounded-full"
-            style={{ backgroundColor: "#34d399" }}
-          />
-          <span className="text-xs font-medium text-foreground">
-            Previous Month
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div
-            className="w-4 h-1 rounded-full"
-            style={{ backgroundColor: "#8b5cf6" }}
-          />
-          <span className="text-xs font-medium text-foreground">Target</span>
-        </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

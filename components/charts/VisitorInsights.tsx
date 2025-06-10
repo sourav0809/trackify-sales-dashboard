@@ -10,17 +10,34 @@ import {
 } from "recharts";
 import { Users, UserPlus, Eye } from "lucide-react";
 import { visitorInsightsData } from "@/constants/chartData.const";
+import { motion } from "framer-motion";
 
 const VisitorInsightsChart = () => {
   return (
-    <div className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col">
-      <div className="mb-6">
-        <h2 className="text-lg primary-heading"> Visitor Insights</h2>
-      </div>
+    <motion.div
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Title */}
+      <motion.div
+        className="pb-6 flex items-center h-[4rem]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="text-lg primary-heading">Visitor Insights</h2>
+      </motion.div>
 
-      <div className="flex-1 flex flex-col gap-2">
+      <div className="flex flex-col h-[calc(100%-7rem)]">
         {/* Chart */}
-        <div className="flex-1">
+        <motion.div
+          className="h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={visitorInsightsData}
@@ -94,14 +111,18 @@ const VisitorInsightsChart = () => {
               />
             </LineChart>
           </ResponsiveContainer>
-        </div>
-
-        {/* Legend */}
-        <div className="pt-1 py-2">
-          <CustomLegend />
-        </div>
+        </motion.div>
       </div>
-    </div>
+      {/* Legend */}
+      <motion.div
+        className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <CustomLegend />
+      </motion.div>
+    </motion.div>
   );
 };
 

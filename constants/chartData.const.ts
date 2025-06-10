@@ -157,3 +157,31 @@ export const metricsData: MetricData[] = [
     subtitle: "+0.5% from yesterday",
   },
 ];
+
+interface UserRegionChartData {
+  name: string;
+  value: number;
+  color: string;
+  percentage: number;
+}
+
+export const userRegionChartData: UserRegionChartData[] = [
+  {
+    name: "India",
+    value: 30146,
+    color: "hsl(142, 76%, 36%)",
+    percentage: 30.5,
+  },
+  {
+    name: "United States",
+    value: 24900,
+    color: "hsl(217, 91%, 60%)",
+    percentage: 52.4,
+  },
+  {
+    name: "Canada",
+    value: 12146,
+    color: "hsl(276, 74%, 68%)",
+    percentage: 25.5,
+  },
+];

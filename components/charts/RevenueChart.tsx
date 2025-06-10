@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import { motion } from "framer-motion";
 import { ChartContainer, ChartTooltip } from "@/components/common/ui/chart";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { revenueChartData } from "@/constants/chartData.const";
@@ -24,16 +25,31 @@ const chartConfig = {
 
 const RevenueChart: React.FC = () => {
   return (
-    <div className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col">
-      {/* Title (smaller spacing) */}
-      <div className="mb-6">
+    <motion.div
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Title */}
+      <motion.div
+        className="pb-6 flex items-center h-[4rem]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
         <h2 className="text-lg primary-heading">Total Revenue</h2>
-      </div>
+      </motion.div>
 
-      {/* Chart + Legend using flex-grow */}
-      <div className="flex-1 flex flex-col gap-2">
+      {/* Chart + Legend container */}
+      <div className="flex flex-col h-[calc(100%-7rem)]">
         {/* Chart */}
-        <div className="flex-1">
+        <motion.div
+          className="h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
           <ResponsiveContainer width="100%" height="100%">
             <ChartContainer config={chartConfig}>
               <BarChart
@@ -85,14 +101,19 @@ const RevenueChart: React.FC = () => {
               </BarChart>
             </ChartContainer>
           </ResponsiveContainer>
-        </div>
-
-        {/* Legend */}
-        <div className="pt-1 py-2 ">
-          <CustomLegend />
-        </div>
+        </motion.div>
       </div>
-    </div>
+
+      {/* Legend */}
+      <motion.div
+        className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <CustomLegend />
+      </motion.div>
+    </motion.div>
   );
 };
 
@@ -147,18 +168,33 @@ const CustomTooltipContent = ({
 };
 
 const CustomLegend: React.FC = () => (
-  <div className="flex items-center justify-center gap-6 w-full text-xs sm:text-[0.8rem]">
-    <div className="flex items-center gap-2">
+  <motion.div
+    className="flex items-center justify-center gap-6 w-full text-xs sm:text-[0.8rem] h-full"
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.4, duration: 0.3 }}
+  >
+    <motion.div
+      className="flex items-center gap-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+    >
       <div className="w-3 h-3 rounded-full bg-blue-500"></div>
       <span className="text-sm text-muted-foreground font-medium">
         Online Sales
       </span>
-    </div>
-    <div className="flex items-center gap-2">
+    </motion.div>
+    <motion.div
+      className="flex items-center gap-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.6 }}
+    >
       <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
       <span className="text-sm text-muted-foreground font-medium">
         Offline Sales
       </span>
-    </div>
-  </div>
+    </motion.div>
+  </motion.div>
 );
