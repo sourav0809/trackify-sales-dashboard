@@ -185,3 +185,102 @@ export const userRegionChartData: UserRegionChartData[] = [
     percentage: 25.5,
   },
 ];
+
+export const productSalesCategoryChartData = [
+  {
+    category: "T-Shirts",
+    currentMonth: 60,
+    previousMonth: 70,
+    target: 90,
+  },
+  {
+    category: "Jeans",
+    currentMonth: 55,
+    previousMonth: 48,
+    target: 86,
+  },
+  {
+    category: "Jackets",
+    currentMonth: 45,
+    previousMonth: 20,
+    target: 75,
+  },
+  {
+    category: "Shoes",
+    currentMonth: 48,
+    previousMonth: 60,
+    target: 72,
+  },
+  {
+    category: "Accessories",
+    currentMonth: 29,
+    previousMonth: 39,
+    target: 40,
+  },
+  {
+    category: "Dresses",
+    currentMonth: 48,
+    previousMonth: 23,
+    target: 69,
+  },
+];
+
+export interface ProductPerFormanceData {
+  name: string;
+  unitsSold: number;
+  revenue: number;
+  popularity: number;
+  category: string;
+  color: string;
+}
+
+export const productPerformanceData: ProductPerFormanceData[] = [
+  {
+    name: "Premium Denim Jeans",
+    unitsSold: 1200,
+    revenue: 89000,
+    popularity: 85,
+    category: "Bottoms",
+    color: "#3b82f6",
+  },
+  {
+    name: "Summer Dresses",
+    unitsSold: 800,
+    revenue: 64000,
+    popularity: 75,
+    category: "Dresses",
+    color: "#34d399",
+  },
+  {
+    name: "Designer Handbags",
+    unitsSold: 400,
+    revenue: 120000,
+    popularity: 90,
+    category: "Accessories",
+    color: "#8b5cf6",
+  },
+  {
+    name: "Graphic T-Shirts",
+    unitsSold: 2000,
+    revenue: 40000,
+    popularity: 65,
+    category: "Tops",
+    color: "#f59e0b",
+  },
+  {
+    name: "Athletic Wear",
+    unitsSold: 1500,
+    revenue: 75000,
+    popularity: 80,
+    category: "Activewear",
+    color: "#ec4899",
+  },
+  {
+    name: "Luxury Watches",
+    unitsSold: 300,
+    revenue: 150000,
+    popularity: 95,
+    category: "Jewelry",
+    color: "#dc2626",
+  },
+];

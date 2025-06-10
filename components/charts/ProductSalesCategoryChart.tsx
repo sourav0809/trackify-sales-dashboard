@@ -9,94 +9,8 @@ import {
   Tooltip,
 } from "recharts";
 import { motion } from "framer-motion";
-
-const radarData = [
-  {
-    category: "T-Shirts",
-    currentMonth: 60,
-    previousMonth: 70,
-    target: 90,
-  },
-  {
-    category: "Jeans",
-    currentMonth: 55,
-    previousMonth: 48,
-    target: 86,
-  },
-  {
-    category: "Jackets",
-    currentMonth: 45,
-    previousMonth: 20,
-    target: 75,
-  },
-  {
-    category: "Shoes",
-    currentMonth: 48,
-    previousMonth: 60,
-    target: 72,
-  },
-  {
-    category: "Accessories",
-    currentMonth: 29,
-    previousMonth: 39,
-    target: 40,
-  },
-  {
-    category: "Dresses",
-    currentMonth: 48,
-    previousMonth: 23,
-    target: 69,
-  },
-];
-
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-}: {
-  active?: boolean;
-  payload?: {
-    color: string;
-    dataKey: string;
-    value: number;
-  }[];
-  label?: string;
-}) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-xl animate-scale-in">
-        <p className="font-semibold text-foreground text-sm mb-2">{label}</p>
-        {payload.map(
-          (
-            entry: { color: string; dataKey: string; value: number },
-            index: number
-          ) => (
-            <div key={index} className="flex items-center gap-3 mb-1 last:mb-0">
-              <div
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: entry.color }}
-              />
-              <div>
-                <span className="text-xs text-muted-foreground">
-                  {entry.dataKey === "currentMonth"
-                    ? "Current"
-                    : entry.dataKey === "previousMonth"
-                    ? "Previous"
-                    : "Target"}
-                  :
-                  <span className="font-semibold text-foreground">
-                    {entry.value}%
-                  </span>
-                </span>
-              </div>
-            </div>
-          )
-        )}
-      </div>
-    );
-  }
-  return null;
-};
+import { productSalesCategoryChartData } from "@/constants/chartData.const";
+import { TrendingUp, TrendingDown, Target } from "lucide-react";
 
 const ProductSalesCategoryChart = () => {
   return (
@@ -127,7 +41,7 @@ const ProductSalesCategoryChart = () => {
         >
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart
-              data={radarData}
+              data={productSalesCategoryChartData}
               margin={{ top: 30, right: 40, bottom: 30, left: 40 }}
             >
               <PolarGrid
@@ -190,7 +104,7 @@ const ProductSalesCategoryChart = () => {
       >
         {/* Modern Legend */}
         <div className="flex flex-wrap justify-center gap-6">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <div
               className="w-4 h-1 rounded-full"
               style={{ backgroundColor: "#3b82f6" }}
@@ -222,3 +136,63 @@ const ProductSalesCategoryChart = () => {
 };
 
 export default ProductSalesCategoryChart;
+
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean;
+  payload?: {
+    color: string;
+    dataKey: string;
+    value: number;
+  }[];
+  label?: string;
+}) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-background/95 backdrop-blur-md border border-border/40 rounded-xl px-4 py-3 shadow-2xl animate-fade-in z-50 min-w-[200px]">
+        <p className="font-semibold text-foreground text-sm mb-3 border-b border-border pb-2">
+          {label}
+        </p>
+        {payload.map((entry, index) => {
+          const Icon =
+            entry.dataKey === "currentMonth"
+              ? TrendingUp
+              : entry.dataKey === "previousMonth"
+              ? TrendingDown
+              : Target;
+
+          const labelText =
+            entry.dataKey === "currentMonth"
+              ? "Current Month"
+              : entry.dataKey === "previousMonth"
+              ? "Previous Month"
+              : "Target";
+
+          return (
+            <div
+              key={index}
+              className="flex items-center gap-3 mb-2 last:mb-0 text-sm"
+            >
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: entry.color }}
+              />
+              <Icon className="w-4 h-4 text-muted-foreground" />
+              <div className="flex flex-col">
+                <span className="text-muted-foreground">{labelText}</span>
+                <span className="text-foreground font-semibold">
+                  {entry.value}%
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return null;
+};
