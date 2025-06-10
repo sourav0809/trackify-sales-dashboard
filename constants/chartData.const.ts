@@ -408,3 +408,49 @@ export const conversionHistoryData: ConversionHistoryData[] = [
     fill: "#ec4899",
   },
 ];
+
+interface ProductPerformanceStatics {
+  metric: string;
+  currentMonth: number;
+  previousMonth: number;
+  target: number;
+}
+
+export const productPerformanceStatistics: ProductPerformanceStatics[] = [
+  {
+    metric: "Sales Volume",
+    currentMonth: 85,
+    previousMonth: 78,
+    target: 90,
+  },
+  {
+    metric: "Customer Rating",
+    currentMonth: 92,
+    previousMonth: 88,
+    target: 95,
+  },
+  {
+    metric: "Return Rate",
+    currentMonth: 15,
+    previousMonth: 22,
+    target: 10,
+  },
+  {
+    metric: "Profit Margin",
+    currentMonth: 68,
+    previousMonth: 65,
+    target: 75,
+  },
+  {
+    metric: "Market Share",
+    currentMonth: 45,
+    previousMonth: 42,
+    target: 50,
+  },
+  {
+    metric: "Brand Awareness",
+    currentMonth: 72,
+    previousMonth: 69,
+    target: 80,
+  },
+];
