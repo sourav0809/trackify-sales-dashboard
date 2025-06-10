@@ -27,7 +27,7 @@ const ProductSalesCategoryChart = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h2 className="text-lg primary-heading">Total Revenue</h2>
+        <h2 className="text-lg primary-heading"> Product Sales Category</h2>
       </motion.div>
 
       {/* Chart + Legend container */}
