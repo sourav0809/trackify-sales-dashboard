@@ -1,5 +1,5 @@
 import { userRegionChartData } from "@/constants/chartData.const";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { motion } from "framer-motion";
 
@@ -17,6 +17,8 @@ const totalVisitors = userRegionChartData.reduce(
 
 const UserRegionChart: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [radius, setRadius] = useState({ outer: 120, inner: 80 });
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const onPieEnter = (_: MouseEvent, index: number) => {
     setActiveIndex(index);
@@ -26,31 +28,54 @@ const UserRegionChart: React.FC = () => {
     setActiveIndex(null);
   };
 
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      if (chartRef.current) {
+        const height = chartRef.current.offsetHeight;
+        // Cap outer radius to avoid overflowing small containers
+        const outer = Math.min(120, height / 2.5);
+        const inner = outer - 40; // Maintain 40px gap between inner and outer
+        setRadius({ outer, inner });
+      }
+    });
+
+    if (chartRef.current) {
+      resizeObserver.observe(chartRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   return (
     <motion.div
-      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      ref={chartRef}
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col min-h-[250px] relative"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       {/* Title */}
       <motion.div
-        className="pb-6 flex items-center h-[4rem]"
+        className="pb-4 flex items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
         <h2 className="text-lg primary-heading">Regions</h2>
       </motion.div>
-      <div className="flex flex-col h-[calc(100%-9rem)] w-full">
+
+      {/* Chart */}
+      <div className="flex-1 relative">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={userRegionChartData}
               cx="50%"
               cy="50%"
-              innerRadius={80}
-              outerRadius={120}
+              innerRadius={radius.inner}
+              outerRadius={radius.outer}
               paddingAngle={6}
               dataKey="value"
               onMouseEnter={onPieEnter}
@@ -78,20 +103,23 @@ const UserRegionChart: React.FC = () => {
             <Tooltip content={<CustomTooltip />} />
           </PieChart>
         </ResponsiveContainer>
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="text-center">
-          <p className="text-xl sm:text-4xl lg:text-xl font-bold text-foreground">
-            {totalVisitors.toLocaleString()}
-          </p>
-          <p className="text-sm sm:text-base text-muted-foreground font-medium mt-1">
-            Total Visitors
-          </p>
+
+        {/* Center Text */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="text-center">
+            <p className="text-xl sm:text-2xl font-bold text-foreground">
+              {totalVisitors.toLocaleString()}
+            </p>
+            <p className="text-sm text-muted-foreground font-medium mt-1">
+              Total Visitors
+            </p>
+          </div>
         </div>
       </div>
 
+      {/* Legend */}
       <motion.div
-        className="h-[5rem] pt-4 pb-4 flex items-center justify-center"
+        className="pt-2 flex items-center justify-center"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
@@ -101,6 +129,7 @@ const UserRegionChart: React.FC = () => {
     </motion.div>
   );
 };
+
 export default UserRegionChart;
 
 const CustomLegend: React.FC = () => (
