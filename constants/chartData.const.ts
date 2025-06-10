@@ -284,3 +284,49 @@ export const productPerformanceData: ProductPerFormanceData[] = [
     color: "#dc2626",
   },
 ];
+
+interface InventoryData {
+  month: string;
+  tshirts: number;
+  jeans: number;
+  dresses: number;
+}
+
+export const inventoryData: InventoryData[] = [
+  {
+    month: "Jan",
+    tshirts: 450,
+    jeans: 380,
+    dresses: 320,
+  },
+  {
+    month: "Feb",
+    tshirts: 420,
+    jeans: 350,
+    dresses: 290,
+  },
+  {
+    month: "Mar",
+    tshirts: 500,
+    jeans: 420,
+    dresses: 380,
+  },
+  {
+    month: "Apr",
+    tshirts: 380,
+    jeans: 320,
+    dresses: 280,
+  },
+  {
+    month: "May",
+    tshirts: 450,
+    jeans: 380,
+    dresses: 340,
+  },
+  {
+    month: "Jun",
+    tshirts: 520,
+    jeans: 450,
+    dresses: 400,
+  },
+];
