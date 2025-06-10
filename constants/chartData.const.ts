@@ -538,3 +538,79 @@ export const orderDistributionData: OrderDistributionData[] = [
     pending: 70,
   },
 ];
+
+interface SalesData {
+  month: string;
+  revenue: number;
+  orders: number;
+  averageOrderValue: number;
+  conversionRate: number;
+  target: number;
+}
+
+export const salesTrendsData: SalesData[] = [
+  {
+    month: "Jan",
+    revenue: 85000,
+    orders: 340,
+    averageOrderValue: 250,
+    conversionRate: 3.2,
+    target: 80000,
+  },
+  {
+    month: "Feb",
+    revenue: 92000,
+    orders: 368,
+    averageOrderValue: 250,
+    conversionRate: 3.5,
+    target: 85000,
+  },
+  {
+    month: "Mar",
+    revenue: 78000,
+    orders: 312,
+    averageOrderValue: 250,
+    conversionRate: 2.9,
+    target: 90000,
+  },
+  {
+    month: "Apr",
+    revenue: 105000,
+    orders: 420,
+    averageOrderValue: 250,
+    conversionRate: 4.1,
+    target: 95000,
+  },
+  {
+    month: "May",
+    revenue: 118000,
+    orders: 472,
+    averageOrderValue: 250,
+    conversionRate: 4.5,
+    target: 100000,
+  },
+  {
+    month: "Jun",
+    revenue: 125000,
+    orders: 500,
+    averageOrderValue: 250,
+    conversionRate: 4.8,
+    target: 105000,
+  },
+  {
+    month: "Jul",
+    revenue: 132000,
+    orders: 528,
+    averageOrderValue: 250,
+    conversionRate: 5.1,
+    target: 110000,
+  },
+  {
+    month: "Aug",
+    revenue: 145000,
+    orders: 580,
+    averageOrderValue: 250,
+    conversionRate: 5.4,
+    target: 115000,
+  },
+];
