@@ -1,3 +1,4 @@
+import { orderDistributionData } from "@/constants/chartData.const";
 import React from "react";
 import {
   BarChart,
@@ -9,50 +10,100 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-interface CategoryData {
-  category: string;
-  delivered: number;
-  returned: number;
-  cancelled: number;
-  pending: number;
-}
-const dummyData: CategoryData[] = [
-  {
-    category: "Dresses",
-    delivered: 500,
-    returned: 300,
-    cancelled: 200,
-    pending: 150,
-  },
-  {
-    category: "T-Shirts",
-    delivered: 450,
-    returned: 250,
-    cancelled: 180,
-    pending: 100,
-  },
-  {
-    category: "Jeans",
-    delivered: 400,
-    returned: 230,
-    cancelled: 160,
-    pending: 90,
-  },
-  {
-    category: "Accessories",
-    delivered: 350,
-    returned: 200,
-    cancelled: 130,
-    pending: 80,
-  },
-  {
-    category: "Shoes",
-    delivered: 300,
-    returned: 180,
-    cancelled: 120,
-    pending: 70,
-  },
-];
+import { motion } from "framer-motion";
+
+const OrderStatusDistributionChart = () => {
+  return (
+    <motion.div
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Title */}
+      <motion.div
+        className="pb-6 flex items-center h-[4rem]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="text-lg primary-heading">Order Distribution</h2>
+      </motion.div>
+
+      {/* Chart + Legend container */}
+      <div className="flex flex-col h-[calc(100%-4rem)]">
+        {/* Chart */}
+        <motion.div
+          className="h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={orderDistributionData}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 20,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis
+                dataKey="category"
+                tick={{ fill: "#64748b", fontSize: 12 }}
+                axisLine={{ stroke: "#e2e8f0" }}
+              />
+              <YAxis
+                tick={{ fill: "#64748b", fontSize: 12 }}
+                axisLine={{ stroke: "#e2e8f0" }}
+                tickFormatter={(value) => value.toLocaleString()}
+              />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{ fill: "transparent" }}
+              />
+              <Legend content={<CustomLegend />} />
+
+              {/* Added Bars for all 4 categories */}
+              <Bar
+                dataKey="delivered"
+                stackId="a"
+                fill="#3b82f6"
+                radius={[4, 4, 0, 0]}
+                name="delivered"
+              />
+              <Bar
+                dataKey="returned"
+                stackId="a"
+                fill="#f43f5e"
+                radius={[4, 4, 0, 0]}
+                name="returned"
+              />
+              <Bar
+                dataKey="cancelled"
+                stackId="a"
+                fill="#f97316"
+                radius={[4, 4, 0, 0]}
+                name="cancelled"
+              />
+              <Bar
+                dataKey="pending"
+                stackId="a"
+                fill="#facc15"
+                radius={[4, 4, 0, 0]}
+                name="pending"
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default OrderStatusDistributionChart;
 
 const CustomTooltip = ({
   active,
@@ -124,7 +175,7 @@ const CustomLegend = ({
   if (!payload) return null;
 
   return (
-    <div className="flex items-center justify-center gap-4 mt-4 pb-4 flex-wrap">
+    <div className="flex items-center justify-center gap-4 mt-8 flex-wrap">
       {payload.map((entry, index) => (
         <div key={index} className="flex items-center gap-2">
           <div
@@ -139,76 +190,3 @@ const CustomLegend = ({
     </div>
   );
 };
-
-const OrderStatusDistributionChart = () => {
-  return (
-    <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm border border-border w-full h-full">
-      <h2 className="text-xl font-medium text-[#625b71] mb-8">
-        Returns vs Delivered
-      </h2>
-
-      <div className="h-[300px] sm:h-[400px] lg:h-[500px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={dummyData}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 20,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis
-              dataKey="category"
-              tick={{ fill: "#64748b", fontSize: 12 }}
-              axisLine={{ stroke: "#e2e8f0" }}
-            />
-            <YAxis
-              tick={{ fill: "#64748b", fontSize: 12 }}
-              axisLine={{ stroke: "#e2e8f0" }}
-              tickFormatter={(value) => value.toLocaleString()}
-            />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={{ fill: "transparent" }}
-            />
-            <Legend content={<CustomLegend />} />
-
-            {/* Added Bars for all 4 categories */}
-            <Bar
-              dataKey="delivered"
-              stackId="a"
-              fill="#3b82f6"
-              radius={[4, 4, 0, 0]}
-              name="delivered"
-            />
-            <Bar
-              dataKey="returned"
-              stackId="a"
-              fill="#f43f5e"
-              radius={[4, 4, 0, 0]}
-              name="returned"
-            />
-            <Bar
-              dataKey="cancelled"
-              stackId="a"
-              fill="#f97316"
-              radius={[4, 4, 0, 0]}
-              name="cancelled"
-            />
-            <Bar
-              dataKey="pending"
-              stackId="a"
-              fill="#facc15"
-              radius={[4, 4, 0, 0]}
-              name="pending"
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-export default OrderStatusDistributionChart;

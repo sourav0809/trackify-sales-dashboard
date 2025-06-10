@@ -493,3 +493,48 @@ export const topProducts: TopProducts[] = [
     color: "#fbbf24",
   },
 ];
+
+interface OrderDistributionData {
+  category: string;
+  delivered: number;
+  returned: number;
+  cancelled: number;
+  pending: number;
+}
+export const orderDistributionData: OrderDistributionData[] = [
+  {
+    category: "Dresses",
+    delivered: 500,
+    returned: 300,
+    cancelled: 200,
+    pending: 150,
+  },
+  {
+    category: "T-Shirts",
+    delivered: 450,
+    returned: 250,
+    cancelled: 180,
+    pending: 100,
+  },
+  {
+    category: "Jeans",
+    delivered: 400,
+    returned: 230,
+    cancelled: 160,
+    pending: 90,
+  },
+  {
+    category: "Accessories",
+    delivered: 350,
+    returned: 200,
+    cancelled: 130,
+    pending: 80,
+  },
+  {
+    category: "Shoes",
+    delivered: 300,
+    returned: 180,
+    cancelled: 120,
+    pending: 70,
+  },
+];
