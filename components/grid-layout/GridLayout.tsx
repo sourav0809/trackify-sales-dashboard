@@ -61,7 +61,7 @@ const GridLayout = () => {
           console.log(value);
         }}
       >
-        {gridLayouts[breakpoint].map((item) => (
+        {gridLayouts[breakpoint].map((item: { i: string }) => (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

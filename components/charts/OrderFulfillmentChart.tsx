@@ -1,3 +1,4 @@
+import { orderFulfillmentData } from "@/constants/chartData.const";
 import React from "react";
 import {
   LineChart,
@@ -8,45 +9,114 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { motion } from "framer-motion";
+import { Clock, Truck, RotateCcw } from "lucide-react";
 
-const orderData = [
-  {
-    month: "Jan",
-    processingTime: 2.5,
-    deliveryTime: 3.8,
-    returnRate: 1.2,
-  },
-  {
-    month: "Feb",
-    processingTime: 2.2,
-    deliveryTime: 3.5,
-    returnRate: 1.4,
-  },
-  {
-    month: "Mar",
-    processingTime: 2.8,
-    deliveryTime: 4.0,
-    returnRate: 1.1,
-  },
-  {
-    month: "Apr",
-    processingTime: 2.3,
-    deliveryTime: 3.6,
-    returnRate: 1.3,
-  },
-  {
-    month: "May",
-    processingTime: 2.1,
-    deliveryTime: 3.4,
-    returnRate: 1.0,
-  },
-  {
-    month: "Jun",
-    processingTime: 2.4,
-    deliveryTime: 3.7,
-    returnRate: 1.2,
-  },
-];
+const OrderFulfillmentChart = () => {
+  return (
+    <motion.div
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="pb-6 flex items-center h-[4rem]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="text-lg primary-heading"> Order Fulfillment Metrics</h2>
+      </motion.div>
+
+      <div className="flex flex-col h-[calc(100%-7rem)]">
+        <motion.div
+          className="h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={orderFulfillmentData}
+              margin={{
+                top: 20,
+                right: 20,
+                left: 0,
+                bottom: 20,
+              }}
+            >
+              <CartesianGrid
+                strokeDasharray="none"
+                stroke="#e5e7eb"
+                opacity={0.3}
+                horizontal={true}
+                vertical={false}
+                strokeWidth={2}
+              />
+              <XAxis
+                dataKey="month"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "#64748b",
+                  fontSize: 12,
+                  fontWeight: 500,
+                }}
+              />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "#64748b",
+                  fontSize: 12,
+                  fontWeight: 500,
+                }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Line
+                type="monotone"
+                dataKey="processingTime"
+                stroke="#3b82f6"
+                strokeWidth={3}
+                dot={{ fill: "#3b82f6", strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: "#3b82f6" }}
+              />
+              <Line
+                type="monotone"
+                dataKey="deliveryTime"
+                stroke="#34d399"
+                strokeWidth={3}
+                dot={{ fill: "#34d399", strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: "#34d399" }}
+              />
+              <Line
+                type="monotone"
+                dataKey="returnRate"
+                stroke="#8b5cf6"
+                strokeWidth={3}
+                dot={{ fill: "#8b5cf6", strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: "#8b5cf6" }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </motion.div>
+      </div>
+
+      {/* Legend */}
+      <motion.div
+        className="h-[4rem] pt-2 pb-4 flex items-center justify-center px-4"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <CustomLegend />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+export default OrderFulfillmentChart;
 
 const CustomTooltip = ({
   active,
@@ -63,42 +133,56 @@ const CustomTooltip = ({
 }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-xl animate-scale-in">
-        <p className="font-semibold text-foreground text-sm mb-2">{label}</p>
-        {payload.map(
-          (
-            entry: { name: string; value: number; color: string },
-            index: number
-          ) => (
-            <div key={index} className="flex items-center gap-3 mb-1 last:mb-0">
+      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-xl shadow-2xl animate-fade-in px-4 py-3 z-50 min-w-[220px]">
+        <p className="font-semibold text-foreground text-sm mb-3 border-b border-border pb-2">
+          {label}
+        </p>
+
+        {payload.map((entry, index) => {
+          let labelText = "";
+          let Icon: React.ElementType = Clock;
+          let unit = "days";
+
+          if (entry.name === "processingTime") {
+            labelText = "Processing Time";
+            Icon = Clock;
+          } else if (entry.name === "deliveryTime") {
+            labelText = "Delivery Time";
+            Icon = Truck;
+          } else if (entry.name === "returnRate") {
+            labelText = "Return Rate";
+            Icon = RotateCcw;
+            unit = "%";
+          }
+
+          return (
+            <div
+              key={index}
+              className="flex items-center gap-3 mb-2 last:mb-0 text-sm"
+            >
               <div
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: entry.color }}
               />
-              <div>
-                <span className="text-xs text-muted-foreground">
-                  {entry.name === "processingTime"
-                    ? "Processing Time"
-                    : entry.name === "deliveryTime"
-                    ? "Delivery Time"
-                    : "Return Rate"}
-                  :
-                  <span className="font-semibold text-foreground">
-                    {entry.value} {entry.name === "returnRate" ? "%" : "days"}
-                  </span>
+              <Icon className="w-4 h-4 text-muted-foreground" />
+              <div className="flex flex-col">
+                <span className="text-muted-foreground">{labelText}</span>
+                <span className="text-foreground font-semibold">
+                  {entry.value} {unit}
                 </span>
               </div>
             </div>
-          )
-        )}
+          );
+        })}
       </div>
     );
   }
+
   return null;
 };
 
 const CustomLegend = () => (
-  <div className="flex flex-wrap justify-center gap-6 mt-4 pb-4">
+  <div className="flex flex-wrap justify-center gap-x-5 gap-y-3 mt-4 pb-4">
     <div className="flex items-center gap-2">
       <div
         className="w-3 h-3 rounded-full"
@@ -128,86 +212,3 @@ const CustomLegend = () => (
     </div>
   </div>
 );
-
-const OrderFulfillmentChart = () => {
-  return (
-    <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-5 shadow-sm border border-border w-full h-full">
-      <div className="mb-6 mt-4">
-        <h2 className="text-xl sm:text-xl font-medium text-[#625b71]">
-          Order Fulfillment Metrics
-        </h2>
-      </div>
-
-      <div className="h-64 sm:h-80 lg:h-96 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={orderData}
-            margin={{
-              top: 20,
-              right: 20,
-              left: 0,
-              bottom: 20,
-            }}
-          >
-            <CartesianGrid
-              strokeDasharray="none"
-              stroke="#e5e7eb"
-              opacity={0.3}
-              horizontal={true}
-              vertical={false}
-              strokeWidth={2}
-            />
-            <XAxis
-              dataKey="month"
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fill: "#64748b",
-                fontSize: 12,
-                fontWeight: 500,
-              }}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{
-                fill: "#64748b",
-                fontSize: 12,
-                fontWeight: 500,
-              }}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Line
-              type="monotone"
-              dataKey="processingTime"
-              stroke="#3b82f6"
-              strokeWidth={3}
-              dot={{ fill: "#3b82f6", strokeWidth: 2 }}
-              activeDot={{ r: 6, fill: "#3b82f6" }}
-            />
-            <Line
-              type="monotone"
-              dataKey="deliveryTime"
-              stroke="#34d399"
-              strokeWidth={3}
-              dot={{ fill: "#34d399", strokeWidth: 2 }}
-              activeDot={{ r: 6, fill: "#34d399" }}
-            />
-            <Line
-              type="monotone"
-              dataKey="returnRate"
-              stroke="#8b5cf6"
-              strokeWidth={3}
-              dot={{ fill: "#8b5cf6", strokeWidth: 2 }}
-              activeDot={{ r: 6, fill: "#8b5cf6" }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-
-      <CustomLegend />
-    </div>
-  );
-};
-
-export default OrderFulfillmentChart;

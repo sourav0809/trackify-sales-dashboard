@@ -1,3 +1,4 @@
+import { conversionHistoryData } from "@/constants/chartData.const";
 import React from "react";
 import {
   ResponsiveContainer,
@@ -6,34 +7,71 @@ import {
   LabelList,
   Tooltip,
 } from "recharts";
+import { motion } from "framer-motion";
 
-const funnelData = [
-  {
-    value: 12000,
-    name: "Visitors",
-    fill: "#3b82f6",
-  },
-  {
-    value: 8500,
-    name: "Add to Cart",
-    fill: "#34d399",
-  },
-  {
-    value: 5200,
-    name: "Checkout",
-    fill: "#8b5cf6",
-  },
-  {
-    value: 4000,
-    name: "Payment",
-    fill: "#f59e0b",
-  },
-  {
-    value: 3200,
-    name: "Purchase",
-    fill: "#ec4899",
-  },
-];
+const ConversionFunnelChart = () => {
+  return (
+    <motion.div
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Title */}
+      <motion.div
+        className="pb-6 flex items-center h-[4rem]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="text-lg primary-heading">
+          {" "}
+          Customer Conversion Journey
+        </h2>
+      </motion.div>
+
+      {/* Chart + Legend container */}
+      <div className="flex flex-col h-[calc(100%-4rem)]">
+        {/* Chart */}
+        <motion.div
+          className="h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <FunnelChart>
+              <Tooltip content={<CustomTooltip />} />
+              <Funnel
+                data={conversionHistoryData}
+                dataKey="value"
+                nameKey="name"
+                isAnimationActive
+              >
+                <LabelList
+                  position="center"
+                  content={
+                    <CustomLabel
+                      x={0}
+                      y={0}
+                      width={0}
+                      height={0}
+                      value={0}
+                      name={""}
+                    />
+                  }
+                  stroke="none"
+                />
+              </Funnel>
+            </FunnelChart>
+          </ResponsiveContainer>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default ConversionFunnelChart;
 
 const CustomTooltip = ({
   active,
@@ -44,9 +82,10 @@ const CustomTooltip = ({
 }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
-    const conversionRate = ((data.value / funnelData[0].value) * 100).toFixed(
-      1
-    );
+    const conversionRate = (
+      (data.value / conversionHistoryData[0].value) *
+      100
+    ).toFixed(1);
 
     return (
       <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-xl animate-scale-in">
@@ -84,7 +123,10 @@ const CustomLabel = (props: {
   const { x, y, width, height, value, name } = props;
   const centerX = x + width / 2;
   const centerY = y + height / 2;
-  const conversionRate = ((value / funnelData[0].value) * 100).toFixed(1);
+  const conversionRate = (
+    (value / conversionHistoryData[0].value) *
+    100
+  ).toFixed(1);
 
   return (
     <g>
@@ -109,46 +151,3 @@ const CustomLabel = (props: {
     </g>
   );
 };
-
-const ConversionFunnelChart = () => {
-  return (
-    <div className="bg-card rounded-2xl p-4 sm:p-6 lg:p-5 shadow-sm border border-border w-full h-full">
-      <div className="mb-6 mt-4">
-        <h2 className="text-xl sm:text-xl font-medium text-[#625b71]">
-          Customer Conversion Journey
-        </h2>
-      </div>
-
-      <div className="h-64 sm:h-80 lg:h-96 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <FunnelChart>
-            <Tooltip content={<CustomTooltip />} />
-            <Funnel
-              data={funnelData}
-              dataKey="value"
-              nameKey="name"
-              isAnimationActive
-            >
-              <LabelList
-                position="center"
-                content={
-                  <CustomLabel
-                    x={0}
-                    y={0}
-                    width={0}
-                    height={0}
-                    value={0}
-                    name={""}
-                  />
-                }
-                stroke="none"
-              />
-            </Funnel>
-          </FunnelChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-};
-
-export default ConversionFunnelChart;

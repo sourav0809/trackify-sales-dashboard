@@ -330,3 +330,81 @@ export const inventoryData: InventoryData[] = [
     dresses: 400,
   },
 ];
+
+interface OrderFulfillmentData {
+  month: string;
+  processingTime: number;
+  deliveryTime: number;
+  returnRate: number;
+}
+
+export const orderFulfillmentData: OrderFulfillmentData[] = [
+  {
+    month: "Jan",
+    processingTime: 2.5,
+    deliveryTime: 3.8,
+    returnRate: 1.2,
+  },
+  {
+    month: "Feb",
+    processingTime: 2.2,
+    deliveryTime: 3.5,
+    returnRate: 1.4,
+  },
+  {
+    month: "Mar",
+    processingTime: 2.8,
+    deliveryTime: 4.0,
+    returnRate: 1.1,
+  },
+  {
+    month: "Apr",
+    processingTime: 2.3,
+    deliveryTime: 3.6,
+    returnRate: 1.3,
+  },
+  {
+    month: "May",
+    processingTime: 2.1,
+    deliveryTime: 3.4,
+    returnRate: 1.0,
+  },
+  {
+    month: "Jun",
+    processingTime: 2.4,
+    deliveryTime: 3.7,
+    returnRate: 1.2,
+  },
+];
+interface ConversionHistoryData {
+  value: number;
+  name: string;
+  fill: string;
+}
+export const conversionHistoryData: ConversionHistoryData[] = [
+  {
+    value: 12000,
+    name: "Visitors",
+    fill: "#3b82f6",
+  },
+  {
+    value: 8500,
+    name: "Add to Cart",
+    fill: "#34d399",
+  },
+  {
+    value: 5200,
+    name: "Checkout",
+    fill: "#8b5cf6",
+  },
+  {
+    value: 4000,
+    name: "Payment",
+    fill: "#f59e0b",
+  },
+  {
+    value: 3200,
+    name: "Purchase",
+    fill: "#ec4899",
+  },
+];
