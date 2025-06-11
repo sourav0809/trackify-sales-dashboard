@@ -119,7 +119,7 @@ const UserRegionChart: React.FC = () => {
 
       {/* Legend */}
       <motion.div
-        className="pt-2 flex items-center justify-center"
+        className="pt-2 mt-2 flex items-center justify-center"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
@@ -133,7 +133,7 @@ const UserRegionChart: React.FC = () => {
 export default UserRegionChart;
 
 const CustomLegend: React.FC = () => (
-  <div className="flex items-center justify-center gap-6 pb-6 bg-white">
+  <div className="flex items-center justify-center gap-6 pt-1 pb-4 bg-white">
     {userRegionChartData.map((item, index) => (
       <div key={index} className="flex items-center gap-2">
         <div
