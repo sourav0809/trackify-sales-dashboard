@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { LayoutDashboard, Layout, Menu, Trello } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,7 +27,7 @@ const navItems: NavItem[] = [
 
 // Separate mobile toggle component
 const MobileMenuToggle = ({ onClick }: { onClick: () => void }) => (
-  <div className="fixed top-0 left-0 right-0 h-16 bg-white border-b z-50 md:hidden">
+  <div className="fixed top-0 left-0 right-0 h-16 bg-white border-b z-50 sm:hidden">
     <button
       onClick={onClick}
       className="absolute top-1/2 -translate-y-1/2 left-4 p-2 hover:bg-gray-100 rounded-md"
@@ -40,45 +40,33 @@ const MobileMenuToggle = ({ onClick }: { onClick: () => void }) => (
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth <= 768;
-      setIsMobile(mobile);
-      if (!mobile) setIsOpen(false);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const toggleSidebar = () => setIsOpen((prev) => !prev);
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      {isMobile && <MobileMenuToggle onClick={toggleSidebar} />}
+      {/* Mobile Menu Button - Only visible below sm breakpoint */}
+      <MobileMenuToggle onClick={() => setIsOpen(!isOpen)} />
 
       <div className="flex">
         {/* Sidebar */}
         <aside
           className={cn(
             "fixed top-0 h-screen bg-white border-r shadow-sm transition-all duration-300 z-40",
-            isMobile
-              ? cn("mt-16", isOpen ? "left-0 w-64" : "-left-full w-64")
-              : cn("left-0", isOpen ? "w-64" : "w-20")
+            // Mobile styles (below sm)
+            "mt-16 sm:mt-0",
+            isOpen ? "left-0 w-64" : "-left-full",
+            // Desktop styles (sm and above)
+            "sm:left-0",
+            isOpen ? "sm:w-64" : "sm:w-20"
           )}
-          onMouseEnter={() => !isMobile && setIsOpen(true)}
-          onMouseLeave={() => !isMobile && setIsOpen(false)}
+          onMouseEnter={() => setIsOpen(true)}
+          onMouseLeave={() => setIsOpen(false)}
         >
           {/* Logo */}
           <div className="h-16 flex items-center px-5 my-5">
             <div className="w-full flex items-center text-blue-500">
               <div className="flex items-center justify-center w-8">
-                <Trello className="h-8 w-8 " />
+                <Trello className="h-8 w-8" />
               </div>
               <div
                 className={cn(
@@ -92,7 +80,7 @@ const Sidebar = () => {
           </div>
 
           {/* Nav Links */}
-          <nav className="mt-4 px-2 space-y-2.5">
+          <nav className="space-y-2 px-4">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -126,10 +114,10 @@ const Sidebar = () => {
           </nav>
         </aside>
 
-        {/* Mobile Overlay */}
-        {isMobile && isOpen && (
+        {/* Mobile Overlay - Only visible below sm breakpoint when sidebar is open */}
+        {isOpen && (
           <div
-            className="fixed inset-0 bg-black/30 z-30"
+            className="fixed inset-0 bg-black/30 z-30 sm:hidden"
             onClick={() => setIsOpen(false)}
           />
         )}

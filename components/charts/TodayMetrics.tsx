@@ -42,10 +42,10 @@ const TodayMetrics = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col bg-white">
+    <div className="w-full h-full mx-auto p-4 md:p-6 lg:p-8 bg-white">
       {/* Header */}
       <motion.div
-        className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 md:p-6 lg:p-8"
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 md:mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -76,7 +76,7 @@ const TodayMetrics = () => {
 
       {/* Metrics Grid */}
       <motion.div
-        className="grid flex-1 gap-4 md:gap-6 p-4 md:p-6 lg:p-8 pt-0 md:pt-0 lg:pt-0 [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))] sm:[grid-template-columns:repeat(auto-fit,minmax(12rem,1fr))]"
+        className="grid gap-4 md:gap-6 [grid-template-columns:repeat(auto-fit,minmax(7rem,1fr))] sm:[grid-template-columns:repeat(auto-fit,minmax(12rem,1fr))]"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -90,10 +90,9 @@ const TodayMetrics = () => {
               transition: { duration: 0.2 },
             }}
             whileTap={{ scale: 0.98 }}
-            className="h-full"
           >
             <Card
-              className={`relative overflow-hidden border-0 shadow-sm h-full hover:shadow-md transition-all duration-300 ${metricsCardBgColors[index]}`}
+              className={`relative overflow-hidden border-0 shadow-sm max-h-[13rem] hover:shadow-md transition-all duration-300 ${metricsCardBgColors[index]}`}
             >
               {/* Icon */}
               <div className="absolute top-4 right-4 opacity-80">
@@ -105,7 +104,7 @@ const TodayMetrics = () => {
               </div>
 
               {/* Content */}
-              <div className="p-6 h-full flex flex-col justify-between">
+              <div className="p-6">
                 <div className="space-y-3">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
