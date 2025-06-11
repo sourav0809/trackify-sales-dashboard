@@ -32,9 +32,11 @@ const UserRegionChart: React.FC = () => {
     const resizeObserver = new ResizeObserver(() => {
       if (chartRef.current) {
         const height = chartRef.current.offsetHeight;
+        const width = chartRef.current.offsetWidth;
+        const minDimension = Math.min(width, height);
         // Cap outer radius to avoid overflowing small containers
-        const outer = Math.min(120, height / 2.5);
-        const inner = outer - 40; // Maintain 40px gap between inner and outer
+        const outer = Math.min(120, minDimension / 3) + 20;
+        const inner = outer * 0.65; // Maintain proportion between inner and outer
         setRadius({ outer, inner });
       }
     });
@@ -50,15 +52,14 @@ const UserRegionChart: React.FC = () => {
 
   return (
     <motion.div
-      ref={chartRef}
-      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col min-h-[250px] relative"
+      className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       {/* Title */}
       <motion.div
-        className="pb-4 flex items-center"
+        className="flex items-center h-[4rem]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -66,66 +67,75 @@ const UserRegionChart: React.FC = () => {
         <h2 className="text-lg primary-heading">Regions</h2>
       </motion.div>
 
-      {/* Chart */}
-      <div className="flex-1 relative">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={userRegionChartData}
-              cx="50%"
-              cy="50%"
-              innerRadius={radius.inner}
-              outerRadius={radius.outer}
-              paddingAngle={6}
-              dataKey="value"
-              onMouseEnter={onPieEnter}
-              onMouseLeave={onPieLeave}
-              animationBegin={0}
-              animationDuration={800}
-            >
-              {userRegionChartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={entry.color}
-                  style={{
-                    filter:
-                      activeIndex === index
-                        ? "brightness(1.1)"
-                        : "brightness(1)",
-                    transition: "all 0.3s ease",
-                    cursor: "pointer",
-                  }}
-                  stroke={activeIndex === index ? entry.color : "transparent"}
-                  strokeWidth={activeIndex === index ? 2 : 0}
-                />
-              ))}
-            </Pie>
-            <Tooltip content={<CustomTooltip />} />
-          </PieChart>
-        </ResponsiveContainer>
+      {/* Chart + Legend container */}
+      <div className="flex flex-col h-[calc(100%-4rem)]">
+        {/* Chart */}
+        <motion.div
+          className="flex-1 relative min-h-0"
+          ref={chartRef}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={userRegionChartData}
+                cx="50%"
+                cy="50%"
+                innerRadius={radius.inner}
+                outerRadius={radius.outer}
+                paddingAngle={6}
+                dataKey="value"
+                onMouseEnter={onPieEnter}
+                onMouseLeave={onPieLeave}
+                animationBegin={0}
+                animationDuration={800}
+              >
+                {userRegionChartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={entry.color}
+                    style={{
+                      filter:
+                        activeIndex === index
+                          ? "brightness(1.1)"
+                          : "brightness(1)",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                    }}
+                    stroke={activeIndex === index ? entry.color : "transparent"}
+                    strokeWidth={activeIndex === index ? 2 : 0}
+                  />
+                ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip />} />
+            </PieChart>
+          </ResponsiveContainer>
 
-        {/* Center Text */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="text-center">
-            <p className="text-xl sm:text-2xl font-bold text-foreground">
-              {totalVisitors.toLocaleString()}
-            </p>
-            <p className="text-sm text-muted-foreground font-medium mt-1">
-              Total Visitors
-            </p>
+          {/* Center Text */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="text-center">
+              <p className="text-base  font-bold text-foreground">
+                {totalVisitors.toLocaleString()}
+              </p>
+              <p className="text-sm text-muted-foreground font-medium mt-1">
+                Total Visitors
+              </p>
+            </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
 
-      {/* Legend */}
-      <motion.div
-        className="pt-2 mt-2 flex items-center justify-center"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <CustomLegend />
-      </motion.div>
+        {/* Legend */}
+        <motion.div
+          className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <CustomLegend />
+        </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -133,7 +143,7 @@ const UserRegionChart: React.FC = () => {
 export default UserRegionChart;
 
 const CustomLegend: React.FC = () => (
-  <div className="flex items-center justify-center gap-6 pt-1 pb-4 bg-white">
+  <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
     {userRegionChartData.map((item, index) => (
       <div key={index} className="flex items-center gap-2">
         <div
@@ -159,7 +169,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-xl animate-scale-in ">
+      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-xl animate-scale-in">
         <div className="flex items-center gap-3">
           <div
             className="w-3 h-3 rounded-full"
