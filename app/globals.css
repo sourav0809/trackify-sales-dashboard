@@ -128,3 +128,35 @@
 @theme {
   --primary-heading: #625b71;
 }
+
+.scrollbar-light {
+  /* WebKit */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-300;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}

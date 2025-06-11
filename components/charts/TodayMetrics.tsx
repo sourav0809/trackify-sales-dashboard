@@ -42,7 +42,7 @@ const TodayMetrics = () => {
   };
 
   return (
-    <div className="w-full h-full mx-auto p-4 md:p-6 lg:p-8 bg-white">
+    <div className="w-full h-full mx-auto p-4 md:p-6 lg:p-8 bg-white overflow-y-auto scrollbar-light">
       {/* Header */}
       <motion.div
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 md:mb-8"
