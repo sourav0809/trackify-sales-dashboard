@@ -45,11 +45,11 @@ const GridLayout = () => {
   };
   console.log("Breakpoint", breakpoint);
   return (
-    <div className="max-w-full mx-auto p-4 ">
+    <div className="w-full mx-auto p-4 ">
       <ResponsiveGridLayout
         className="layout"
         layouts={gridLayouts}
-        breakpoints={{ xl: 1280, lg: 1024, md: 768, sm: 640 }}
+        breakpoints={{ xl: 1100, lg: 800, md: 550, sm: 400 }}
         cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
         rowHeight={10}
         isDraggable={true}
