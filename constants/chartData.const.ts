@@ -152,7 +152,7 @@ export const metricsData: MetricData[] = [
   },
   {
     id: 4,
-    title: "New Customers",
+    title: "New User",
     value: "8",
     subtitle: "+0.5% from yesterday",
   },
