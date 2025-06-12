@@ -18,7 +18,7 @@ interface UserState {
 // Initial state
 const initialState: UserState = {
   user: null,
-  token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
+  token: "",
   isAuthenticated: false,
   dashboardLoading: false,
 };
