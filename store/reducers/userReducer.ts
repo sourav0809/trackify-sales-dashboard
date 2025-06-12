@@ -32,7 +32,6 @@ const userSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.isAuthenticated = true;
-      state.error = null;
     },
     setDashboardLoading: (state, action: PayloadAction<boolean>) => {
       state.dashboardLoading = action.payload;
@@ -41,16 +40,11 @@ const userSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      state.error = null;
-    },
-    clearError: (state) => {
-      state.error = null;
     },
   },
 });
 
-export const { setUser, setDashboardLoading, clearUser, clearError } =
-  userSlice.actions;
+export const { setUser, setDashboardLoading, clearUser } = userSlice.actions;
 
 // Types for dispatch
 export type UserDispatch = (
