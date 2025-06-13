@@ -1,12 +1,17 @@
-// app/layout.tsx (or app/layout.js)
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { ReduxProvider } from "@/store/provider";
-import AuthGuard from "@/components/AuthGuard";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+// Initialize Poppins font
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Sales Dashboard",
@@ -19,11 +24,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className + " bg-gray-50/50"}>
+    <html
+      lang="en"
+      className={cn(poppins.variable, "font-sans antialiased")}
+      suppressHydrationWarning
+    >
+      <body className={cn("min-h-screen bg-background antialiased")}>
         <ReduxProvider>
-          <AuthGuard>{children}</AuthGuard>
-          <Toaster position="top-right" richColors />
+          {children}
+          <Toaster
+            position="top-right"
+            richColors
+            closeButton
+            expand
+            visibleToasts={6}
+          />
         </ReduxProvider>
       </body>
     </html>

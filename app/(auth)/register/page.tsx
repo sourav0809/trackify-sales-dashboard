@@ -40,7 +40,6 @@ export default function RegisterPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear errors when user starts typing
     if (validationErrors[name]) {
       setValidationErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -68,14 +67,17 @@ export default function RegisterPage() {
       // Make API call using agent
       const response = await agent.Auth.register(formData);
 
-      // Store token in cookie
-      Cookies.set(AUTH_COOKIE_NAME, response.token, {
+      Cookies.set(AUTH_COOKIE_NAME, response.data.token, {
         expires: AUTH_COOKIE_EXPIRES,
       });
 
       // Update Redux state
-      dispatch(setUser({ token: response.token, user: response.user }));
-
+      dispatch(
+        setUser({
+          token: response.data.token,
+          user: response.data.user,
+        })
+      );
       // Show success toast
       toast.success("Account created successfully!");
       router.push("/dashboard");

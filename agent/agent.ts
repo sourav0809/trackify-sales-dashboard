@@ -75,11 +75,14 @@ const requests = {
 
 // Types
 export interface UserResponse {
-  token: string;
-  user: {
-    id: string;
-    name: string;
-    email: string;
+  data: {
+    token: string;
+    user: {
+      id: string;
+      name: string;
+      email: string;
+    };
+    userPreferences: any;
   };
 }
 
@@ -100,7 +103,7 @@ const Auth = {
     requests.post<UserResponse, LoginRequest>("/auth/login", data),
   register: (data: RegisterRequest) =>
     requests.post<UserResponse, RegisterRequest>("/auth/register", data),
-  getUser: () => requests.get<UserResponse>("/auth/user"),
+  getUser: () => requests.get<UserResponse>("/user/get-user"),
   logout: () => {
     Cookies.remove(AUTH_COOKIE_NAME);
     return Promise.resolve();
