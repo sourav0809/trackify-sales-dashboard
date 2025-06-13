@@ -7,7 +7,7 @@ interface ApiErrorResponse {
   message: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Axios instance with default config
 const axiosInstance = axios.create({
@@ -82,7 +82,7 @@ export interface UserResponse {
       name: string;
       email: string;
     };
-    userPreferences: any;
+    preferences: any;
   };
 }
 
@@ -97,17 +97,12 @@ export interface RegisterRequest {
   password: string;
 }
 
-// API calls organized by feature
 const Auth = {
   login: (data: LoginRequest) =>
     requests.post<UserResponse, LoginRequest>("/auth/login", data),
   register: (data: RegisterRequest) =>
     requests.post<UserResponse, RegisterRequest>("/auth/register", data),
   getUser: () => requests.get<UserResponse>("/user/get-user"),
-  logout: () => {
-    Cookies.remove(AUTH_COOKIE_NAME);
-    return Promise.resolve();
-  },
 };
 
 const agent = {

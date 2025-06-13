@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import { gridLayouts } from "@/constants/gridLayouts.const";
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -18,6 +19,8 @@ import ProductBubbleChart from "../charts/ProductBubbleChart";
 import ProductPerformanceRadarChart from "../charts/ProductPerformanceRadarChart";
 import SalesTrendsComposedChart from "../charts/SalesTrendsComposedChart";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -39,16 +42,16 @@ const componentMap: Record<string, React.ReactElement> = {
 
 const GridLayout = () => {
   const [breakpoint, setBreakpoint] = useState("lg");
-
+  const { layoutConfig } = useSelector((state: RootState) => state.user);
   const handleBreakpointChange = (newBreakpoint: string) => {
     setBreakpoint(newBreakpoint);
   };
-  console.log("Breakpoint", breakpoint);
+
   return (
     <div className="w-full mx-auto p-4 ">
       <ResponsiveGridLayout
         className="layout"
-        layouts={gridLayouts}
+        layouts={layoutConfig}
         breakpoints={{ xl: 1100, lg: 800, md: 550, sm: 400 }}
         cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
         rowHeight={10}

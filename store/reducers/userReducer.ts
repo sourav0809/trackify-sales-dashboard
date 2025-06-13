@@ -19,6 +19,7 @@ interface LayoutItem {
 }
 
 interface LayoutConfig {
+  [key: string]: LayoutItem[];
   lg: LayoutItem[];
   md: LayoutItem[];
   sm: LayoutItem[];
