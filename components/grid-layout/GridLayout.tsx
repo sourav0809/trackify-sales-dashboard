@@ -40,40 +40,56 @@ const componentMap: Record<string, React.ReactElement> = {
   salesTrendsComposedChart: <SalesTrendsComposedChart />,
 };
 
-const GridLayout = () => {
+interface GridLayoutProps {
+  isEditing?: boolean;
+  onLayoutChange?: (layout: any, layouts: any) => void;
+  onBreakpointChange?: (newBreakpoint: string) => void;
+}
+
+const GridLayout = ({
+  isEditing = false,
+  onLayoutChange,
+  onBreakpointChange,
+}: GridLayoutProps) => {
   const [breakpoint, setBreakpoint] = useState("lg");
   const { layoutConfig } = useSelector((state: RootState) => state.user);
+
   const handleBreakpointChange = (newBreakpoint: string) => {
     setBreakpoint(newBreakpoint);
+    onBreakpointChange?.(newBreakpoint);
+  };
+
+  const handleLayoutChange = (layout: any, layouts: any) => {
+    onLayoutChange?.(layout, layouts);
   };
 
   return (
-    <div className="w-full mx-auto p-4 ">
+    <div className="w-full mx-auto p-4">
       <ResponsiveGridLayout
         className="layout"
-        layouts={layoutConfig}
+        layouts={layoutConfig || gridLayouts}
         breakpoints={{ xl: 1100, lg: 800, md: 550, sm: 400 }}
         cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
         rowHeight={10}
-        isDraggable={true}
-        isResizable={true}
+        isDraggable={isEditing}
+        isResizable={isEditing}
         margin={[16, 16]}
         containerPadding={[0, 0]}
         onBreakpointChange={handleBreakpointChange}
-        onLayoutChange={(value) => {
-          console.log(value);
-        }}
+        onLayoutChange={handleLayoutChange}
       >
-        {gridLayouts[breakpoint].map((item: { i: string }) => (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            key={item.i}
-          >
-            <GridItem>{componentMap[item.i]}</GridItem>
-          </motion.div>
-        ))}
+        {(layoutConfig || gridLayouts)[breakpoint].map(
+          (item: { i: string }) => (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              key={item.i}
+            >
+              <GridItem>{componentMap[item.i]}</GridItem>
+            </motion.div>
+          )
+        )}
       </ResponsiveGridLayout>
     </div>
   );

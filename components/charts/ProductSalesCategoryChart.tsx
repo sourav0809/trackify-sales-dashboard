@@ -24,7 +24,6 @@ const ProductSalesCategoryChart = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Title */}
       <motion.div
         className="pb-6 flex items-center h-[4rem]"
         initial={{ opacity: 0 }}
@@ -34,9 +33,7 @@ const ProductSalesCategoryChart = () => {
         <h2 className="text-lg primary-heading"> Product Sales Category</h2>
       </motion.div>
 
-      {/* Chart + Legend container */}
       <div className="flex flex-col h-[calc(100%-7rem)]">
-        {/* Chart */}
         <motion.div
           className="h-full"
           initial={{ opacity: 0, scale: 0.95 }}
