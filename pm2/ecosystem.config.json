@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "sales-dashboard-client",
+      "script": ".next/standalone/server.js",
+      "cwd": "/home/ec2-user/trackify-client",
+      "instances": 1,
+      "exec_mode": "fork",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 3000
+      }
+    }
+  ]
+}

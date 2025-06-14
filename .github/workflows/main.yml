@@ -1,0 +1,44 @@
+name: Trackify Client
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, main, trackify-client]
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          clean: "false"
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build application
+        run: npm run build
+
+      - name: Link Environment File
+        run: |
+          if [ -f /opt/trackify-client/.env ]; then
+            rm -f .env
+            ln -s /opt/trackify-client/.env .env
+            echo ".env symlink created"
+          else
+            echo "/opt/trackify-client/.env not found"
+            exit 1
+          fi
+
+      - name: Start Server
+        run: npm run start:prod
