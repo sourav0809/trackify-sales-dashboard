@@ -71,7 +71,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           todayMetricsResponse,
           topProductsResponse,
         ] = await Promise.all([
-          agent.Auth.getUser(),
+          agent.User.getUser(),
           agent.Charts.getRevenue(),
           agent.Charts.getMetrics(),
           agent.Charts.getUserRegion(),
@@ -88,13 +88,20 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           agent.Charts.getTopProducts(),
         ]);
 
+        const userResponseData = userResponse.data.user;
+
         // Update user state
-        dispatch(setUser({ token, user: userResponse.user }));
-        if (userResponse?.preferences?.dashboardLayoutConfig) {
+        dispatch(setUser({ token, user: userResponseData }));
+
+        if (userResponseData?.preferences?.dashboardLayoutConfig) {
+          console.log("updating layout");
           dispatch(
-            setDashboardLayout(userResponse.preferences.dashboardLayoutConfig)
+            setDashboardLayout(
+              userResponseData?.preferences?.dashboardLayoutConfig
+            )
           );
         } else {
+          console.log("setting default layout");
           dispatch(setDashboardLayout(gridLayouts));
         }
 

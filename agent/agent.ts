@@ -86,9 +86,9 @@ export interface UserResponse {
     id: string;
     name: string;
     email: string;
-  };
-  preferences?: {
-    dashboardLayoutConfig?: any;
+    preferences?: {
+      dashboardLayoutConfig?: any;
+    };
   };
 }
 
@@ -112,11 +112,17 @@ const Auth = {
     requests.post<UserResponse, LoginRequest>("/auth/login", data),
   register: (data: RegisterRequest) =>
     requests.post<UserResponse, RegisterRequest>("/auth/register", data),
-  getUser: () => requests.get<UserResponse>("/user/get-user"),
+
   logout: () => {
     Cookies.remove("token");
     return Promise.resolve();
   },
+};
+
+const User = {
+  getUser: () => requests.get<UserResponse>("/user/get-user"),
+  updateUserPreferences: (data: any) =>
+    requests.put<UserResponse, any>("/user/update-preferences", data),
 };
 
 const Charts = {
@@ -164,6 +170,7 @@ const Charts = {
 const agent = {
   Auth,
   Charts,
+  User,
 };
 
 export default agent;

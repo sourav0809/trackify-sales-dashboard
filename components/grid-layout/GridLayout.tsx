@@ -1,6 +1,5 @@
 "use client";
 import { motion } from "framer-motion";
-import { gridLayouts } from "@/constants/gridLayouts.const";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -42,6 +41,7 @@ const componentMap: Record<string, React.ReactElement> = {
 
 interface GridLayoutProps {
   isEditing?: boolean;
+  editedLayouts?: any;
   onLayoutChange?: (layout: any, layouts: any) => void;
   onBreakpointChange?: (newBreakpoint: string) => void;
 }
@@ -67,7 +67,7 @@ const GridLayout = ({
     <div className="w-full mx-auto p-4">
       <ResponsiveGridLayout
         className="layout"
-        layouts={layoutConfig || gridLayouts}
+        layouts={layoutConfig}
         breakpoints={{ xl: 1100, lg: 800, md: 550, sm: 400 }}
         cols={{ lg: 12, md: 12, sm: 12, xl: 12 }}
         rowHeight={10}
@@ -78,18 +78,16 @@ const GridLayout = ({
         onBreakpointChange={handleBreakpointChange}
         onLayoutChange={handleLayoutChange}
       >
-        {(layoutConfig || gridLayouts)[breakpoint].map(
-          (item: { i: string }) => (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              key={item.i}
-            >
-              <GridItem>{componentMap[item.i]}</GridItem>
-            </motion.div>
-          )
-        )}
+        {layoutConfig[breakpoint].map((item: { i: string }) => (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            key={item.i}
+          >
+            <GridItem>{componentMap[item.i]}</GridItem>
+          </motion.div>
+        ))}
       </ResponsiveGridLayout>
     </div>
   );
