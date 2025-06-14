@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, main, trackify-client]
+    runs-on: [self-hosted, trackify-client]
 
     strategy:
       matrix:
