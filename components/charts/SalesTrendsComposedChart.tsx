@@ -13,9 +13,14 @@ import {
   ReferenceLine,
 } from "recharts";
 import { motion } from "framer-motion";
-import { salesTrendsData } from "@/constants/chartData.const";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { chartColors } from "@/constants/style.const";
 
 const SalesTrendsComposedChart = () => {
+  const salesTrendsData = useSelector(
+    (state: RootState) => state.chart.salesTrends
+  );
   const [activeMetric, setActiveMetric] = useState<string | null>(null);
 
   return (
@@ -90,7 +95,7 @@ const SalesTrendsComposedChart = () => {
               <Bar
                 yAxisId="left"
                 dataKey="revenue"
-                fill="#3b82f6"
+                fill={chartColors.primary}
                 radius={[4, 4, 0, 0]}
                 opacity={activeMetric === "revenue" || !activeMetric ? 1 : 0.3}
                 onMouseEnter={() => setActiveMetric("revenue")}
@@ -100,7 +105,7 @@ const SalesTrendsComposedChart = () => {
               <Bar
                 yAxisId="left"
                 dataKey="orders"
-                fill="#34d399"
+                fill={chartColors.secondary}
                 radius={[4, 4, 0, 0]}
                 opacity={activeMetric === "orders" || !activeMetric ? 0.8 : 0.3}
                 onMouseEnter={() => setActiveMetric("orders")}
@@ -111,10 +116,10 @@ const SalesTrendsComposedChart = () => {
                 yAxisId="right"
                 type="monotone"
                 dataKey="conversionRate"
-                stroke="#f59e0b"
+                stroke={chartColors.quaternary}
                 strokeWidth={3}
                 dot={{
-                  fill: "#f59e0b",
+                  fill: chartColors.quaternary,
                   strokeWidth: 2,
                   r: 5,
                   opacity:
@@ -124,7 +129,7 @@ const SalesTrendsComposedChart = () => {
                 }}
                 activeDot={{
                   r: 7,
-                  fill: "#f59e0b",
+                  fill: chartColors.quaternary,
                   strokeWidth: 2,
                   stroke: "#fff",
                 }}
@@ -139,7 +144,7 @@ const SalesTrendsComposedChart = () => {
                 yAxisId="left"
                 type="monotone"
                 dataKey="target"
-                stroke="#ef4444"
+                stroke={chartColors.senary}
                 strokeWidth={2}
                 strokeDasharray="8 8"
                 dot={false}
@@ -149,7 +154,7 @@ const SalesTrendsComposedChart = () => {
               <ReferenceLine
                 yAxisId="left"
                 y={100000}
-                stroke="#ef4444"
+                stroke={chartColors.senary}
                 strokeDasharray="4 4"
                 strokeOpacity={0.5}
                 label={{
@@ -180,7 +185,6 @@ const CustomTooltip = ({
   payload?: Array<{
     name: string;
     value: number;
-    color: string;
     dataKey: string;
   }>;
   label?: string;
@@ -190,6 +194,21 @@ const CustomTooltip = ({
     const ordersData = payload.find((p) => p.dataKey === "orders");
     const conversionData = payload.find((p) => p.dataKey === "conversionRate");
     const targetData = payload.find((p) => p.dataKey === "target");
+
+    const getColor = (dataKey: string) => {
+      switch (dataKey) {
+        case "revenue":
+          return chartColors.primary;
+        case "orders":
+          return chartColors.secondary;
+        case "conversionRate":
+          return chartColors.quaternary;
+        case "target":
+          return chartColors.senary;
+        default:
+          return chartColors.primary;
+      }
+    };
 
     return (
       <motion.div
@@ -209,7 +228,7 @@ const CustomTooltip = ({
               <div className="flex items-center gap-2">
                 <div
                   className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: revenueData.color }}
+                  style={{ backgroundColor: getColor(revenueData.dataKey) }}
                 />
                 <span className="text-sm text-muted-foreground font-medium">
                   Revenue
@@ -225,7 +244,7 @@ const CustomTooltip = ({
               <div className="flex items-center gap-2">
                 <div
                   className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: ordersData.color }}
+                  style={{ backgroundColor: getColor(ordersData.dataKey) }}
                 />
                 <span className="text-sm text-muted-foreground font-medium">
                   Orders
@@ -241,7 +260,7 @@ const CustomTooltip = ({
               <div className="flex items-center gap-2">
                 <div
                   className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: conversionData.color }}
+                  style={{ backgroundColor: getColor(conversionData.dataKey) }}
                 />
                 <span className="text-sm text-muted-foreground font-medium">
                   Conversion Rate
@@ -253,9 +272,17 @@ const CustomTooltip = ({
             </div>
           )}
           {targetData && (
-            <div className="flex items-center justify-between pt-2 border-t border-border">
-              <span className="text-xs text-muted-foreground">Target:</span>
-              <span className="text-xs font-medium text-muted-foreground">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: getColor(targetData.dataKey) }}
+                />
+                <span className="text-sm text-muted-foreground font-medium">
+                  Target
+                </span>
+              </div>
+              <span className="text-sm font-semibold text-foreground">
                 ${(targetData.value / 1000).toFixed(0)}k
               </span>
             </div>
@@ -272,15 +299,37 @@ const CustomLegend = ({
 }: {
   payload?: Array<{
     value: string;
-    color: string;
     type: string;
   }>;
 }) => {
-  const legendLabels = {
-    revenue: "Revenue",
-    orders: "Orders",
-    conversionRate: "Conversion Rate",
-    target: "Target",
+  const getColor = (value: string) => {
+    switch (value) {
+      case "revenue":
+        return chartColors.primary;
+      case "orders":
+        return chartColors.secondary;
+      case "conversionRate":
+        return chartColors.quaternary;
+      case "target":
+        return chartColors.senary;
+      default:
+        return chartColors.primary;
+    }
+  };
+
+  const getLegendLabel = (value: string) => {
+    switch (value) {
+      case "revenue":
+        return "Revenue";
+      case "orders":
+        return "Orders";
+      case "conversionRate":
+        return "Conversion Rate";
+      case "target":
+        return "Target";
+      default:
+        return value;
+    }
   };
 
   return (
@@ -293,22 +342,12 @@ const CustomLegend = ({
           transition={{ delay: index * 0.1 }}
           className="flex items-center gap-2"
         >
-          <div className="flex items-center gap-1">
-            {entry.type === "line" ? (
-              <div
-                className="w-4 h-0.5"
-                style={{ backgroundColor: entry.color }}
-              />
-            ) : (
-              <div
-                className="w-3 h-3 rounded-sm"
-                style={{ backgroundColor: entry.color }}
-              />
-            )}
-          </div>
+          <div
+            className="w-3 h-3 rounded-full"
+            style={{ backgroundColor: getColor(entry.value) }}
+          />
           <span className="text-sm text-muted-foreground font-medium">
-            {legendLabels[entry.value as keyof typeof legendLabels] ||
-              entry.value}
+            {getLegendLabel(entry.value)}
           </span>
         </motion.div>
       ))}

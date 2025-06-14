@@ -1,4 +1,3 @@
-import { orderFulfillmentData } from "@/constants/chartData.const";
 import React from "react";
 import {
   LineChart,
@@ -11,8 +10,15 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import { Clock, Truck, RotateCcw } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { chartColors } from "@/constants/style.const";
 
 const OrderFulfillmentChart = () => {
+  const orderFulfillmentData = useSelector(
+    (state: RootState) => state.chart.orderFulfillment
+  );
+
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -26,7 +32,7 @@ const OrderFulfillmentChart = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h2 className="text-lg primary-heading"> Order Fulfillment Metrics</h2>
+        <h2 className="text-lg primary-heading">Order Fulfillment Metrics</h2>
       </motion.div>
 
       <div className="flex flex-col h-[calc(100%-7rem)]">
@@ -77,26 +83,26 @@ const OrderFulfillmentChart = () => {
               <Line
                 type="monotone"
                 dataKey="processingTime"
-                stroke="#3b82f6"
+                stroke={chartColors.primary}
                 strokeWidth={3}
-                dot={{ fill: "#3b82f6", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#3b82f6" }}
+                dot={{ fill: chartColors.primary, strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: chartColors.primary }}
               />
               <Line
                 type="monotone"
                 dataKey="deliveryTime"
-                stroke="#34d399"
+                stroke={chartColors.secondary}
                 strokeWidth={3}
-                dot={{ fill: "#34d399", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#34d399" }}
+                dot={{ fill: chartColors.secondary, strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: chartColors.secondary }}
               />
               <Line
                 type="monotone"
                 dataKey="returnRate"
-                stroke="#8b5cf6"
+                stroke={chartColors.tertiary}
                 strokeWidth={3}
-                dot={{ fill: "#8b5cf6", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#8b5cf6" }}
+                dot={{ fill: chartColors.tertiary, strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: chartColors.tertiary }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -186,7 +192,7 @@ const CustomLegend = () => (
     <div className="flex items-center gap-2">
       <div
         className="w-3 h-3 rounded-full"
-        style={{ backgroundColor: "#3b82f6" }}
+        style={{ backgroundColor: chartColors.primary }}
       />
       <span className="text-sm text-muted-foreground font-medium">
         Processing Time
@@ -195,7 +201,7 @@ const CustomLegend = () => (
     <div className="flex items-center gap-2">
       <div
         className="w-3 h-3 rounded-full"
-        style={{ backgroundColor: "#34d399" }}
+        style={{ backgroundColor: chartColors.secondary }}
       />
       <span className="text-sm text-muted-foreground font-medium">
         Delivery Time
@@ -204,7 +210,7 @@ const CustomLegend = () => (
     <div className="flex items-center gap-2">
       <div
         className="w-3 h-3 rounded-full"
-        style={{ backgroundColor: "#8b5cf6" }}
+        style={{ backgroundColor: chartColors.tertiary }}
       />
       <span className="text-sm text-muted-foreground font-medium">
         Return Rate

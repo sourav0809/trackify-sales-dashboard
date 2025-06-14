@@ -1,4 +1,3 @@
-import { inventoryData } from "@/constants/chartData.const";
 import React from "react";
 import {
   AreaChart,
@@ -10,8 +9,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const InventoryLevelsChart = () => {
+  const inventoryData = useSelector(
+    (state: RootState) => state.chart.inventoryLevels
+  );
+
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -26,7 +31,7 @@ const InventoryLevelsChart = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h2 className="text-lg primary-heading">Total Revenue</h2>
+        <h2 className="text-lg primary-heading">Inventory Levels</h2>
       </motion.div>
 
       {/* Chart + Legend container */}
@@ -79,7 +84,7 @@ const InventoryLevelsChart = () => {
               <Tooltip content={<CustomTooltip />} />
               <Area
                 type="monotone"
-                dataKey="tshirts"
+                dataKey="currentStock"
                 stackId="1"
                 stroke="#3b82f6"
                 fill="#3b82f6"
@@ -87,7 +92,7 @@ const InventoryLevelsChart = () => {
               />
               <Area
                 type="monotone"
-                dataKey="jeans"
+                dataKey="reorderPoint"
                 stackId="1"
                 stroke="#34d399"
                 fill="#34d399"
@@ -95,7 +100,7 @@ const InventoryLevelsChart = () => {
               />
               <Area
                 type="monotone"
-                dataKey="dresses"
+                dataKey="safetyStock"
                 stackId="1"
                 stroke="#8b5cf6"
                 fill="#8b5cf6"
@@ -104,17 +109,17 @@ const InventoryLevelsChart = () => {
             </AreaChart>
           </ResponsiveContainer>
         </motion.div>
-      </div>
 
-      {/* Legend */}
-      <motion.div
-        className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <CustomLegend />
-      </motion.div>
+        {/* Legend */}
+        <motion.div
+          className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <CustomLegend />
+        </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -173,7 +178,7 @@ const CustomLegend = () => (
         style={{ backgroundColor: "#3b82f6" }}
       />
       <span className="text-sm text-muted-foreground font-medium">
-        T-Shirts
+        Current Stock
       </span>
     </div>
     <div className="flex items-center gap-2">
@@ -181,14 +186,18 @@ const CustomLegend = () => (
         className="w-3 h-3 rounded-full"
         style={{ backgroundColor: "#34d399" }}
       />
-      <span className="text-sm text-muted-foreground font-medium">Jeans</span>
+      <span className="text-sm text-muted-foreground font-medium">
+        Reorder Point
+      </span>
     </div>
     <div className="flex items-center gap-2">
       <div
         className="w-3 h-3 rounded-full"
         style={{ backgroundColor: "#8b5cf6" }}
       />
-      <span className="text-sm text-muted-foreground font-medium">Dresses</span>
+      <span className="text-sm text-muted-foreground font-medium">
+        Safety Stock
+      </span>
     </div>
   </div>
 );

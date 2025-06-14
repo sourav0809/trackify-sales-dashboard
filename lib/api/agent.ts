@@ -1,5 +1,19 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
+import {
+  ConversionHistoryData,
+  MetricData,
+  OrderDistributionData,
+  OrderFulfillmentData,
+  ProductPerFormanceData,
+  ProductPerformanceStatics,
+  ProductSalesCategoryData,
+  RevenueChartData,
+  SalesData,
+  UserRegionChartData,
+  InventoryLevelData,
+  VisitorInsightData,
+} from "@/types/charts.types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
@@ -73,6 +87,9 @@ export interface UserResponse {
     name: string;
     email: string;
   };
+  preferences?: {
+    dashboardLayoutConfig?: any;
+  };
 }
 
 export interface LoginRequest {
@@ -80,10 +97,13 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface RegisterRequest {
+export interface RegisterRequest extends LoginRequest {
   name: string;
-  email: string;
-  password: string;
+}
+
+interface ApiResponse<T> {
+  message: string;
+  data: T;
 }
 
 // API calls organized by feature
@@ -92,15 +112,54 @@ const Auth = {
     requests.post<UserResponse, LoginRequest>("/auth/login", data),
   register: (data: RegisterRequest) =>
     requests.post<UserResponse, RegisterRequest>("/auth/register", data),
-  current: () => requests.get<UserResponse>("/auth/get-user"),
+  getUser: () => requests.get<UserResponse>("/auth/get-user"),
   logout: () => {
     Cookies.remove("token");
     return Promise.resolve();
   },
 };
 
+const Charts = {
+  getRevenue: () =>
+    requests.get<ApiResponse<RevenueChartData[]>>("/charts/revenue"),
+  getMetrics: () => requests.get<ApiResponse<MetricData[]>>("/charts/metrics"),
+  getUserRegion: () =>
+    requests.get<ApiResponse<UserRegionChartData[]>>("/charts/user-region"),
+  getProductSalesCategory: () =>
+    requests.get<ApiResponse<ProductSalesCategoryData[]>>(
+      "/charts/product-sales-category"
+    ),
+  getProductPerformance: () =>
+    requests.get<ApiResponse<ProductPerFormanceData[]>>(
+      "/charts/product-performance"
+    ),
+  getProductPerformanceStatistics: () =>
+    requests.get<ApiResponse<ProductPerformanceStatics[]>>(
+      "/charts/product-performance/statistics"
+    ),
+  getOrderFulfillment: () =>
+    requests.get<ApiResponse<OrderFulfillmentData[]>>(
+      "/charts/order-fulfillment"
+    ),
+  getConversionHistory: () =>
+    requests.get<ApiResponse<ConversionHistoryData[]>>(
+      "/charts/conversion-history"
+    ),
+  getOrderDistribution: () =>
+    requests.get<ApiResponse<OrderDistributionData[]>>(
+      "/charts/order-distribution"
+    ),
+  getSalesTrends: () =>
+    requests.get<ApiResponse<SalesData[]>>("/charts/sales-trends"),
+  getInventoryLevels: () =>
+    requests.get<ApiResponse<InventoryLevelData[]>>("/charts/inventory-levels"),
+  getVisitorInsights: () =>
+    requests.get<ApiResponse<VisitorInsightData[]>>("/charts/visitor-insights"),
+};
+
 const agent = {
   Auth,
+  Charts,
 };
 
 export default agent;

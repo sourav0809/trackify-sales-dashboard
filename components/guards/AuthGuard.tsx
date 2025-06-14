@@ -9,7 +9,22 @@ import {
   setDashboardLayout,
   setUser,
 } from "@/store/reducers/userReducer";
-import agent from "@/agent/agent";
+import {
+  setChartLoading,
+  setRevenueData,
+  setMetricsData,
+  setUserRegionData,
+  setProductSalesCategoryData,
+  setProductPerformanceData,
+  setProductPerformanceStatistics,
+  setOrderFulfillmentData,
+  setConversionHistoryData,
+  setOrderDistributionData,
+  setSalesTrendsData,
+  setInventoryLevels,
+  setVisitorInsights,
+} from "@/store/reducers/chartReducer";
+import agent from "@/lib/api/agent";
 import Cookies from "js-cookie";
 import Loader from "../Loader";
 import { gridLayouts } from "@/constants/gridLayouts.const";
@@ -34,19 +49,73 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
       try {
         dispatch(setDashboardLoading(true));
-        const response = await agent.Auth.getUser();
-        const data = response.data;
-        dispatch(setUser({ token, user: data.user }));
-        if (data?.preferences?.dashboardLayoutConfig) {
-          dispatch(setDashboardLayout(data.preferences.dashboardLayoutConfig));
+        dispatch(setChartLoading(true));
+
+        // Fetch user data and all chart data in parallel
+        const [
+          userResponse,
+          revenueResponse,
+          metricsResponse,
+          userRegionResponse,
+          productSalesCategoryResponse,
+          productPerformanceResponse,
+          productPerformanceStatsResponse,
+          orderFulfillmentResponse,
+          conversionHistoryResponse,
+          orderDistributionResponse,
+          salesTrendsResponse,
+          inventoryLevelsResponse,
+          visitorInsightsResponse,
+        ] = await Promise.all([
+          agent.Auth.getUser(),
+          agent.Charts.getRevenue(),
+          agent.Charts.getMetrics(),
+          agent.Charts.getUserRegion(),
+          agent.Charts.getProductSalesCategory(),
+          agent.Charts.getProductPerformance(),
+          agent.Charts.getProductPerformanceStatistics(),
+          agent.Charts.getOrderFulfillment(),
+          agent.Charts.getConversionHistory(),
+          agent.Charts.getOrderDistribution(),
+          agent.Charts.getSalesTrends(),
+          agent.Charts.getInventoryLevels(),
+          agent.Charts.getVisitorInsights(),
+        ]);
+
+        // Update user state
+        dispatch(setUser({ token, user: userResponse.user }));
+        if (userResponse?.preferences?.dashboardLayoutConfig) {
+          dispatch(
+            setDashboardLayout(userResponse.preferences.dashboardLayoutConfig)
+          );
         } else {
           dispatch(setDashboardLayout(gridLayouts));
         }
-      } catch {
+
+        // Update chart state
+        dispatch(setRevenueData(revenueResponse.data));
+        dispatch(setMetricsData(metricsResponse.data));
+        dispatch(setUserRegionData(userRegionResponse.data));
+        dispatch(
+          setProductSalesCategoryData(productSalesCategoryResponse.data)
+        );
+        dispatch(setProductPerformanceData(productPerformanceResponse.data));
+        dispatch(
+          setProductPerformanceStatistics(productPerformanceStatsResponse.data)
+        );
+        dispatch(setOrderFulfillmentData(orderFulfillmentResponse.data));
+        dispatch(setConversionHistoryData(conversionHistoryResponse.data));
+        dispatch(setOrderDistributionData(orderDistributionResponse.data));
+        dispatch(setSalesTrendsData(salesTrendsResponse.data));
+        dispatch(setInventoryLevels(inventoryLevelsResponse.data));
+        dispatch(setVisitorInsights(visitorInsightsResponse.data));
+      } catch (error) {
         Cookies.remove("token");
         router.push("/login");
+        console.log(error);
       } finally {
         dispatch(setDashboardLoading(false));
+        dispatch(setChartLoading(false));
       }
     };
 

@@ -1,4 +1,3 @@
-import { orderDistributionData } from "@/constants/chartData.const";
 import React from "react";
 import {
   BarChart,
@@ -11,8 +10,22 @@ import {
   Legend,
 } from "recharts";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { chartColors } from "@/constants/style.const";
 
 const OrderStatusDistributionChart = () => {
+  const orderDistributionData = useSelector(
+    (state: RootState) => state.chart.orderDistribution
+  );
+
+  const statusColors = {
+    delivered: chartColors.primary,
+    returned: chartColors.secondary,
+    cancelled: chartColors.tertiary,
+    pending: chartColors.quaternary,
+  };
+
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -61,37 +74,37 @@ const OrderStatusDistributionChart = () => {
                 tickFormatter={(value) => value.toLocaleString()}
               />
               <Tooltip
-                content={<CustomTooltip />}
+                content={<CustomTooltip statusColors={statusColors} />}
                 cursor={{ fill: "transparent" }}
               />
-              <Legend content={<CustomLegend />} />
+              <Legend content={<CustomLegend statusColors={statusColors} />} />
 
               {/* Added Bars for all 4 categories */}
               <Bar
                 dataKey="delivered"
                 stackId="a"
-                fill="#3b82f6"
+                fill={statusColors.delivered}
                 radius={[4, 4, 0, 0]}
                 name="delivered"
               />
               <Bar
                 dataKey="returned"
                 stackId="a"
-                fill="#f43f5e"
+                fill={statusColors.returned}
                 radius={[4, 4, 0, 0]}
                 name="returned"
               />
               <Bar
                 dataKey="cancelled"
                 stackId="a"
-                fill="#f97316"
+                fill={statusColors.cancelled}
                 radius={[4, 4, 0, 0]}
                 name="cancelled"
               />
               <Bar
                 dataKey="pending"
                 stackId="a"
-                fill="#facc15"
+                fill={statusColors.pending}
                 radius={[4, 4, 0, 0]}
                 name="pending"
               />
@@ -105,11 +118,7 @@ const OrderStatusDistributionChart = () => {
 
 export default OrderStatusDistributionChart;
 
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-}: {
+interface CustomTooltipProps {
   active?: boolean;
   payload?: Array<{
     value: number;
@@ -117,6 +126,13 @@ const CustomTooltip = ({
     fill: string;
   }>;
   label?: string;
+  statusColors: Record<string, string>;
+}
+
+const CustomTooltip: React.FC<CustomTooltipProps> = ({
+  active,
+  payload,
+  label,
 }) => {
   if (active && payload && payload.length) {
     const delivered = payload.find((p) => p.name === "delivered")?.value || 0;
@@ -164,26 +180,25 @@ const CustomTooltip = ({
   return null;
 };
 
-const CustomLegend = ({
-  payload,
-}: {
+interface CustomLegendProps {
   payload?: Array<{
     value: string;
     color: string;
   }>;
-}) => {
-  if (!payload) return null;
+  statusColors: Record<string, string>;
+}
 
+const CustomLegend: React.FC<CustomLegendProps> = ({ statusColors }) => {
   return (
     <div className="flex items-center justify-center gap-4 mt-8 flex-wrap">
-      {payload.map((entry, index) => (
-        <div key={index} className="flex items-center gap-2">
+      {Object.entries(statusColors).map(([status, color]) => (
+        <div key={status} className="flex items-center gap-2">
           <div
             className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: entry.color }}
+            style={{ backgroundColor: color }}
           />
           <span className="text-sm text-muted-foreground font-medium capitalize">
-            {entry.value}
+            {status}
           </span>
         </div>
       ))}
