@@ -29,6 +29,11 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: Move static assets for standalone build
+        run: |
+          mkdir -p .next/standalone/.next
+          mv .next/static .next/standalone/.next
+
       - name: Link Environment File
         run: |
           if [ -f /opt/trackify-client/.env ]; then
