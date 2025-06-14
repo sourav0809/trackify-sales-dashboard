@@ -3,7 +3,7 @@
     {
       "name": "sales-dashboard-client",
       "script": ".next/standalone/server.js",
-      "cwd": "/home/ec2-user/trackify-client",
+      "cwd": "/home/ec2-user/trackify-client/_work/trackify-sales-dashboard/trackify-sales-dashboard",
       "instances": 1,
       "exec_mode": "fork",
       "env": {
