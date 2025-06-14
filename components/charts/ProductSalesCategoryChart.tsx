@@ -9,10 +9,14 @@ import {
   Tooltip,
 } from "recharts";
 import { motion } from "framer-motion";
-import { productSalesCategoryChartData } from "@/constants/chartData.const";
 import { TrendingUp, TrendingDown, Target } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const ProductSalesCategoryChart = () => {
+  const productSalesCategoryData = useSelector(
+    (state: RootState) => state.chart.productSalesCategory
+  );
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -41,7 +45,7 @@ const ProductSalesCategoryChart = () => {
         >
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart
-              data={productSalesCategoryChartData}
+              data={productSalesCategoryData}
               margin={{ top: 30, right: 40, bottom: 30, left: 40 }}
             >
               <PolarGrid

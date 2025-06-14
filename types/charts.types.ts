@@ -112,3 +112,10 @@ export interface VisitorInsightData {
   newVisitors: number;
   returningVisitors: number;
 }
+
+export interface ProductSalesCategoryData {
+  category: string;
+  currentMonth: number;
+  previousMonth: number;
+  target: number;
+}
