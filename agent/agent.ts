@@ -155,6 +155,10 @@ const Charts = {
     requests.get<ApiResponse<InventoryLevelData[]>>("/charts/inventory-levels"),
   getVisitorInsights: () =>
     requests.get<ApiResponse<VisitorInsightData[]>>("/charts/visitor-insights"),
+  getTodayMetrics: () =>
+    requests.get<ApiResponse<MetricData[]>>("/charts/today-metrics"),
+  getTopProducts: () =>
+    requests.get<ApiResponse<ProductPerFormanceData[]>>("/charts/top-products"),
 };
 
 const agent = {

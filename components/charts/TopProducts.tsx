@@ -1,9 +1,24 @@
 import React from "react";
 import { ResponsiveContainer } from "recharts";
 import { motion } from "framer-motion";
-import { topProducts } from "@/constants/chartData.const";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { chartColors } from "@/constants/style.const";
 
 const TopProducts = () => {
+  const topProducts = useSelector(
+    (state: RootState) => state.chart.topProducts
+  );
+
+  // Map of colors for different categories
+  const categoryColors = {
+    Dresses: chartColors.primary,
+    Accessories: chartColors.secondary,
+    Bottoms: chartColors.tertiary,
+    Jewelry: chartColors.quaternary,
+    "Tops & T-Shirts": chartColors.quinary,
+  };
+
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -40,14 +55,12 @@ const TopProducts = () => {
 
               {/* Rows Container */}
               <div className="flex-1 flex flex-col justify-between py-2">
-                {topProducts.map((product) => (
+                {topProducts.map((product, index) => (
                   <div
-                    key={product.id}
+                    key={product.name}
                     className="grid grid-cols-12 items-center text-sm px-2 py-2"
                   >
-                    <div className="col-span-1 text-[#625b71]">
-                      {product.id}
-                    </div>
+                    <div className="col-span-1 text-[#625b71]">{index + 1}</div>
                     <div className="col-span-5 font-medium text-[#625b71] truncate pr-4">
                       {product.name}
                     </div>
@@ -57,7 +70,10 @@ const TopProducts = () => {
                           className="absolute left-0 top-0 h-full rounded-full"
                           style={{
                             width: `${product.popularity}%`,
-                            backgroundColor: product.color,
+                            backgroundColor:
+                              categoryColors[
+                                product.category as keyof typeof categoryColors
+                              ] || chartColors.primary,
                           }}
                         />
                       </div>
@@ -66,11 +82,18 @@ const TopProducts = () => {
                       <span
                         className="rounded-full px-3 py-1 text-xs font-medium"
                         style={{
-                          backgroundColor: `${product.color}15`,
-                          color: product.color,
+                          backgroundColor: `${
+                            categoryColors[
+                              product.category as keyof typeof categoryColors
+                            ] || chartColors.primary
+                          }15`,
+                          color:
+                            categoryColors[
+                              product.category as keyof typeof categoryColors
+                            ] || chartColors.primary,
                         }}
                       >
-                        {product.sales}%
+                        {product.unitsSold}
                       </span>
                     </div>
                   </div>

@@ -23,6 +23,8 @@ import {
   setSalesTrendsData,
   setInventoryLevels,
   setVisitorInsights,
+  setTodayMetrics,
+  setTopProducts,
 } from "@/store/reducers/chartReducer";
 import agent from "@/agent/agent";
 import Cookies from "js-cookie";
@@ -66,6 +68,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           salesTrendsResponse,
           inventoryLevelsResponse,
           visitorInsightsResponse,
+          todayMetricsResponse,
+          topProductsResponse,
         ] = await Promise.all([
           agent.Auth.getUser(),
           agent.Charts.getRevenue(),
@@ -80,6 +84,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           agent.Charts.getSalesTrends(),
           agent.Charts.getInventoryLevels(),
           agent.Charts.getVisitorInsights(),
+          agent.Charts.getTodayMetrics(),
+          agent.Charts.getTopProducts(),
         ]);
 
         // Update user state
@@ -109,6 +115,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         dispatch(setSalesTrendsData(salesTrendsResponse.data));
         dispatch(setInventoryLevels(inventoryLevelsResponse.data));
         dispatch(setVisitorInsights(visitorInsightsResponse.data));
+        dispatch(setTodayMetrics(todayMetricsResponse.data));
+        dispatch(setTopProducts(topProductsResponse.data));
       } catch (error) {
         Cookies.remove("token");
         router.push("/login");

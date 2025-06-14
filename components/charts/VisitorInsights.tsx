@@ -19,8 +19,6 @@ const VisitorInsightsChart = () => {
     (state: RootState) => state.chart.visitorInsights
   );
 
-  console.log(visitorData);
-
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"

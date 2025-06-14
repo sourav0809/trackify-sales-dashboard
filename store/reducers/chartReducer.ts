@@ -27,6 +27,8 @@ interface ChartState {
   salesTrends: SalesData[];
   inventoryLevels: InventoryLevelData[];
   visitorInsights: VisitorInsightData[];
+  todayMetrics: MetricData[];
+  topProducts: ProductPerFormanceData[];
   loading: boolean;
   error: string | null;
 }
@@ -44,6 +46,8 @@ const initialState: ChartState = {
   salesTrends: [],
   inventoryLevels: [],
   visitorInsights: [],
+  todayMetrics: [],
+  topProducts: [],
   loading: false,
   error: null,
 };
@@ -121,6 +125,15 @@ const chartSlice = createSlice({
     ) => {
       state.visitorInsights = action.payload;
     },
+    setTodayMetrics: (state, action: PayloadAction<MetricData[]>) => {
+      state.todayMetrics = action.payload;
+    },
+    setTopProducts: (
+      state,
+      action: PayloadAction<ProductPerFormanceData[]>
+    ) => {
+      state.topProducts = action.payload;
+    },
   },
 });
 
@@ -139,6 +152,8 @@ export const {
   setSalesTrendsData,
   setInventoryLevels,
   setVisitorInsights,
+  setTodayMetrics,
+  setTopProducts,
 } = chartSlice.actions;
 
 export default chartSlice.reducer;

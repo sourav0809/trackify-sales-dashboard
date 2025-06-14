@@ -9,7 +9,8 @@ import {
   CheckCircle,
   Users,
 } from "lucide-react";
-import { metricsData } from "@/constants/chartData.const";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 import {
   metricsCardBgColors,
   metricsDataIconBgColors,
@@ -23,6 +24,10 @@ const iconMap = [
 ];
 
 const TodayMetrics = () => {
+  const todayMetrics = useSelector(
+    (state: RootState) => state.chart.todayMetrics
+  );
+
   const cardVariants = {
     hidden: { opacity: 0, y: 20, scale: 0.95 },
     visible: {
@@ -81,7 +86,7 @@ const TodayMetrics = () => {
         initial="hidden"
         animate="visible"
       >
-        {metricsData.map((metric, index) => (
+        {todayMetrics.map((metric, index) => (
           <motion.div
             key={metric.id}
             variants={cardVariants}
