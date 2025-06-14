@@ -23,17 +23,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      - name: Build application
-        run: npm run build
-
-      - name: Move static assets for standalone build
-        run: |
-          mkdir -p .next/standalone/.next
-          mv .next/static .next/standalone/.next
-
       - name: Link Environment File
         run: |
           if [ -f /opt/trackify-client/.env ]; then
@@ -44,6 +33,17 @@ jobs:
             echo "/opt/trackify-client/.env not found"
             exit 1
           fi
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build application
+        run: npm run build
+
+      - name: Move static assets for standalone build
+        run: |
+          mkdir -p .next/standalone/.next
+          mv .next/static .next/standalone/.next
 
       - name: Start Server
         run: npm run start:prod
