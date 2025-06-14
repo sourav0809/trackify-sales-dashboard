@@ -51,7 +51,6 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form data
     const validationResult = validateForm(registerSchema, formData);
 
     if (!validationResult.success) {
@@ -64,21 +63,19 @@ export default function RegisterPage() {
       setValidationErrors({});
       setFormError(null);
 
-      // Make API call using agent
       const response = await agent.Auth.register(formData);
 
       Cookies.set(AUTH_COOKIE_NAME, response.data.token, {
         expires: AUTH_COOKIE_EXPIRES,
       });
 
-      // Update Redux state
       dispatch(
         setUser({
           token: response.data.token,
           user: response.data.user,
         })
       );
-      // Show success toast
+
       toast.success("Account created successfully!");
       router.push("/dashboard");
     } catch (err) {
@@ -96,7 +93,6 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row overflow-hidden">
-      {/* Left Section - Gradient Background (hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800" />
         <div className="relative w-full h-full flex items-center justify-center p-12">

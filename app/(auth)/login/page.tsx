@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/reducers/userReducer";
-import agent from "@/lib/api/agent";
+import agent from "@/agent/agent";
 import { loginSchema, type LoginFormData } from "@/schemas/auth";
 import { validateForm } from "@/lib/validations/helpers";
 import { toast } from "sonner";

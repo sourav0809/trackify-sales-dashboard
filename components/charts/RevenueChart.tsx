@@ -10,20 +10,23 @@ import {
 import { motion } from "framer-motion";
 import { ChartContainer, ChartTooltip } from "@/components/common/ui/chart";
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { revenueChartData } from "@/constants/chartData.const";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { chartColors } from "@/constants/style.const";
 
 const chartConfig = {
   onlineSales: {
     label: "Online Sales",
-    color: "#3b82f6",
+    color: chartColors.primary,
   },
   offlineSales: {
     label: "Offline Sales",
-    color: "#34d399",
+    color: chartColors.secondary,
   },
 };
 
 const RevenueChart: React.FC = () => {
+  const revenueData = useSelector((state: RootState) => state.chart.revenue);
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -53,7 +56,7 @@ const RevenueChart: React.FC = () => {
           <ResponsiveContainer width="100%" height="100%">
             <ChartContainer config={chartConfig}>
               <BarChart
-                data={revenueChartData}
+                data={revenueData}
                 margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
                 barCategoryGap="15%"
               >

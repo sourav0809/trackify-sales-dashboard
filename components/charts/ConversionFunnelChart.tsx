@@ -1,4 +1,3 @@
-import { conversionHistoryData } from "@/constants/chartData.const";
 import React from "react";
 import {
   ResponsiveContainer,
@@ -6,10 +5,35 @@ import {
   Funnel,
   LabelList,
   Tooltip,
+  Cell,
 } from "recharts";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { chartColors } from "@/constants/style.const";
 
 const ConversionFunnelChart = () => {
+  const conversionHistoryData = useSelector(
+    (state: RootState) => state.chart.conversionHistory
+  );
+
+  const getStageColor = (index: number) => {
+    switch (index) {
+      case 0:
+        return chartColors.primary;
+      case 1:
+        return chartColors.secondary;
+      case 2:
+        return chartColors.tertiary;
+      case 3:
+        return chartColors.quaternary;
+      case 4:
+        return chartColors.quinary;
+      default:
+        return chartColors.primary;
+    }
+  };
+
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -24,10 +48,7 @@ const ConversionFunnelChart = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h2 className="text-lg primary-heading">
-          {" "}
-          Customer Conversion Journey
-        </h2>
+        <h2 className="text-lg primary-heading">Customer Conversion Journey</h2>
       </motion.div>
 
       {/* Chart + Legend container */}
@@ -48,6 +69,9 @@ const ConversionFunnelChart = () => {
                 nameKey="name"
                 isAnimationActive
               >
+                {conversionHistoryData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={getStageColor(index)} />
+                ))}
                 <LabelList
                   position="center"
                   content={
@@ -58,6 +82,7 @@ const ConversionFunnelChart = () => {
                       height={0}
                       value={0}
                       name={""}
+                      getStageColor={getStageColor}
                     />
                   }
                   stroke="none"
@@ -80,6 +105,10 @@ const CustomTooltip = ({
   active?: boolean;
   payload?: Array<{ payload: { name: string; value: number } }>;
 }) => {
+  const conversionHistoryData = useSelector(
+    (state: RootState) => state.chart.conversionHistory
+  );
+
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     const conversionRate = (
@@ -112,17 +141,23 @@ const CustomTooltip = ({
   return null;
 };
 
-const CustomLabel = (props: {
+interface CustomLabelProps {
   x: number;
   y: number;
   width: number;
   height: number;
   value: number;
   name: string;
-}) => {
+  getStageColor: (index: number) => string;
+}
+
+const CustomLabel = (props: CustomLabelProps) => {
   const { x, y, width, height, value, name } = props;
   const centerX = x + width / 2;
   const centerY = y + height / 2;
+  const conversionHistoryData = useSelector(
+    (state: RootState) => state.chart.conversionHistory
+  );
   const conversionRate = (
     (value / conversionHistoryData[0].value) *
     100

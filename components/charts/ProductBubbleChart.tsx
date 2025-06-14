@@ -1,7 +1,3 @@
-import {
-  ProductPerFormanceData,
-  productPerformanceData,
-} from "@/constants/chartData.const";
 import React from "react";
 import {
   ScatterChart,
@@ -14,8 +10,35 @@ import {
   CartesianGrid,
 } from "recharts";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { chartColors } from "@/constants/style.const";
+import { ProductPerFormanceData } from "@/types/charts.types";
 
 const ProductBubbleChart = () => {
+  const productPerformanceData = useSelector(
+    (state: RootState) => state.chart.productPerformance
+  );
+
+  const getProductColor = (category: string) => {
+    switch (category.toLowerCase()) {
+      case "bottoms":
+        return chartColors.primary;
+      case "dresses":
+        return chartColors.secondary;
+      case "accessories":
+        return chartColors.tertiary;
+      case "tops":
+        return chartColors.quaternary;
+      case "activewear":
+        return chartColors.quinary;
+      case "jewelry":
+        return chartColors.senary;
+      default:
+        return chartColors.primary;
+    }
+  };
+
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -30,7 +53,7 @@ const ProductBubbleChart = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h2 className="text-lg primary-heading"> Product Performance</h2>
+        <h2 className="text-lg primary-heading">Product Performance</h2>
       </motion.div>
 
       {/* Chart + Legend container */}
@@ -89,10 +112,16 @@ const ProductBubbleChart = () => {
                 range={[50, 400]}
                 name="Popularity"
               />
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip
+                content={<CustomTooltip getProductColor={getProductColor} />}
+              />
 
               {productPerformanceData.map((item, index) => (
-                <Scatter key={index} data={[item]} fill={item.color} />
+                <Scatter
+                  key={index}
+                  data={[item]}
+                  fill={getProductColor(item.category)}
+                />
               ))}
             </ScatterChart>
           </ResponsiveContainer>
@@ -106,7 +135,10 @@ const ProductBubbleChart = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <CustomLegend />
+        <CustomLegend
+          data={productPerformanceData}
+          getProductColor={getProductColor}
+        />
       </motion.div>
     </motion.div>
   );
@@ -114,13 +146,21 @@ const ProductBubbleChart = () => {
 
 export default ProductBubbleChart;
 
-const CustomLegend = () => (
+interface CustomLegendProps {
+  data: ProductPerFormanceData[];
+  getProductColor: (category: string) => string;
+}
+
+const CustomLegend: React.FC<CustomLegendProps> = ({
+  data,
+  getProductColor,
+}) => (
   <div className="flex items-center justify-center gap-y-2 gap-x-3 sm:gap-x-4 sm:gap-y-3 mt-4 pb-4 flex-wrap">
-    {productPerformanceData.map((item) => (
+    {data.map((item) => (
       <div key={item.category} className="flex items-center gap-2">
         <div
           className="w-3 h-3 rounded-full"
-          style={{ backgroundColor: item.color }}
+          style={{ backgroundColor: getProductColor(item.category) }}
         />
         <span className="text-sm text-muted-foreground font-medium">
           {item.category}
@@ -130,15 +170,15 @@ const CustomLegend = () => (
   </div>
 );
 
-const CustomTooltip = ({
-  active,
-  payload,
-}: {
+interface CustomTooltipProps {
   active?: boolean;
   payload?: Array<{
     payload: ProductPerFormanceData;
   }>;
-}) => {
+  getProductColor: (category: string) => string;
+}
+
+const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (

@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/userReducer";
+import chartReducer from "./reducers/chartReducer";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    chart: chartReducer,
   },
 });
 

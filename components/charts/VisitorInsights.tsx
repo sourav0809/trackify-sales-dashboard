@@ -9,10 +9,18 @@ import {
   Tooltip,
 } from "recharts";
 import { Users, UserPlus, Eye } from "lucide-react";
-import { visitorInsightsData } from "@/constants/chartData.const";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+
 import { motion } from "framer-motion";
 
 const VisitorInsightsChart = () => {
+  const visitorData = useSelector(
+    (state: RootState) => state.chart.visitorInsights
+  );
+
+  console.log(visitorData);
+
   return (
     <motion.div
       className="bg-card rounded-2xl p-4 shadow-sm border border-border w-full h-full flex flex-col"
@@ -40,7 +48,7 @@ const VisitorInsightsChart = () => {
         >
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              data={visitorInsightsData}
+              data={visitorData}
               margin={{
                 top: 20,
                 right: 10,
@@ -55,7 +63,7 @@ const VisitorInsightsChart = () => {
                 opacity={0.3}
               />
               <XAxis
-                dataKey="month"
+                dataKey="date"
                 axisLine={false}
                 tickLine={false}
                 tick={{
@@ -73,8 +81,8 @@ const VisitorInsightsChart = () => {
                   fill: "hsl(var(--muted-foreground))",
                   fontWeight: 500,
                 }}
-                domain={[0, 400]}
-                ticks={[0, 100, 200, 300, 400]}
+                domain={[0, 5000]}
+                ticks={[0, 1000, 2000, 3000, 4000, 5000]}
                 className="text-xs sm:text-sm"
               />
               <Tooltip
@@ -87,7 +95,7 @@ const VisitorInsightsChart = () => {
               />
               <Line
                 type="monotone"
-                dataKey="loyalCustomers"
+                dataKey="returningVisitors"
                 stroke="#8b5cf6"
                 strokeWidth={3}
                 dot={false}
@@ -95,7 +103,7 @@ const VisitorInsightsChart = () => {
               />
               <Line
                 type="monotone"
-                dataKey="newCustomers"
+                dataKey="newVisitors"
                 stroke="#ef4444"
                 strokeWidth={3}
                 dot={false}
@@ -103,7 +111,7 @@ const VisitorInsightsChart = () => {
               />
               <Line
                 type="monotone"
-                dataKey="uniqueCustomers"
+                dataKey="totalVisitors"
                 stroke="#22c55e"
                 strokeWidth={3}
                 dot={false}
@@ -132,17 +140,17 @@ const CustomLegend = () => (
   <div className="flex items-center justify-center gap-6 w-ful text-xs sm:text-[0.8rem] flex-wrap ">
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-purple-500"></div>
-      <span className="text-muted-foreground font-medium">Loyal Customers</span>
+      <span className="text-muted-foreground font-medium">
+        Returning Visitors
+      </span>
     </div>
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-red-500"></div>
-      <span className="text-muted-foreground font-medium">New Customers</span>
+      <span className="text-muted-foreground font-medium">New Visitors</span>
     </div>
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-green-500"></div>
-      <span className="text-muted-foreground font-medium">
-        Unique Customers
-      </span>
+      <span className="text-muted-foreground font-medium">Total Visitors</span>
     </div>
   </div>
 );
@@ -175,15 +183,15 @@ const CustomTooltip = ({
               let Icon = Users;
               let label = "";
 
-              if (entry.dataKey === "loyalCustomers") {
+              if (entry.dataKey === "returningVisitors") {
                 Icon = Users;
-                label = "Loyal Customers";
-              } else if (entry.dataKey === "newCustomers") {
+                label = "Returning Visitors";
+              } else if (entry.dataKey === "newVisitors") {
                 Icon = UserPlus;
-                label = "New Customers";
-              } else if (entry.dataKey === "uniqueCustomers") {
+                label = "New Visitors";
+              } else if (entry.dataKey === "totalVisitors") {
                 Icon = Eye;
-                label = "Unique Customers";
+                label = "Total Visitors";
               }
 
               return (

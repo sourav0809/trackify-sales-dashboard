@@ -1,13 +1,21 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { toast } from "sonner";
-import { AUTH_COOKIE_NAME } from "@/constants/auth";
+import {
+  ConversionHistoryData,
+  MetricData,
+  OrderDistributionData,
+  OrderFulfillmentData,
+  ProductPerFormanceData,
+  ProductPerformanceStatics,
+  ProductSalesCategoryData,
+  RevenueChartData,
+  SalesData,
+  UserRegionChartData,
+  InventoryLevelData,
+  VisitorInsightData,
+} from "@/types/charts.types";
 
-interface ApiErrorResponse {
-  message: string;
-}
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
 // Axios instance with default config
 const axiosInstance = axios.create({
@@ -20,26 +28,23 @@ const axiosInstance = axios.create({
 // Response interceptor
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error: AxiosError<ApiErrorResponse>) => {
+  (error: AxiosError) => {
     const { response } = error;
 
     // Handle specific error cases
     switch (response?.status) {
       case 401:
-        Cookies.remove(AUTH_COOKIE_NAME);
-        toast.error("Session expired. Please login again.");
+        Cookies.remove("token");
         break;
       case 403:
-        toast.error("You do not have permission to perform this action.");
+        // Handle forbidden
         break;
       case 404:
-        toast.error("Resource not found.");
+        // Handle not found
         break;
       case 500:
-        toast.error("An unexpected error occurred. Please try again later.");
+        // Handle server error
         break;
-      default:
-        toast.error(response?.data?.message || "Something went wrong.");
     }
 
     return Promise.reject(error);
@@ -49,7 +54,7 @@ axiosInstance.interceptors.response.use(
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = Cookies.get(AUTH_COOKIE_NAME);
+    const token = Cookies.get("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -75,14 +80,15 @@ const requests = {
 
 // Types
 export interface UserResponse {
-  data: {
-    token: string;
-    user: {
-      id: string;
-      name: string;
-      email: string;
-    };
-    preferences: any;
+  data: any;
+  token: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  preferences?: {
+    dashboardLayoutConfig?: any;
   };
 }
 
@@ -91,22 +97,69 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface RegisterRequest {
+export interface RegisterRequest extends LoginRequest {
   name: string;
-  email: string;
-  password: string;
 }
 
+interface ApiResponse<T> {
+  message: string;
+  data: T;
+}
+
+// API calls organized by feature
 const Auth = {
   login: (data: LoginRequest) =>
     requests.post<UserResponse, LoginRequest>("/auth/login", data),
   register: (data: RegisterRequest) =>
     requests.post<UserResponse, RegisterRequest>("/auth/register", data),
   getUser: () => requests.get<UserResponse>("/user/get-user"),
+  logout: () => {
+    Cookies.remove("token");
+    return Promise.resolve();
+  },
+};
+
+const Charts = {
+  getRevenue: () =>
+    requests.get<ApiResponse<RevenueChartData[]>>("/charts/revenue"),
+  getMetrics: () => requests.get<ApiResponse<MetricData[]>>("/charts/metrics"),
+  getUserRegion: () =>
+    requests.get<ApiResponse<UserRegionChartData[]>>("/charts/user-region"),
+  getProductSalesCategory: () =>
+    requests.get<ApiResponse<ProductSalesCategoryData[]>>(
+      "/charts/product-sales-category"
+    ),
+  getProductPerformance: () =>
+    requests.get<ApiResponse<ProductPerFormanceData[]>>(
+      "/charts/product-performance"
+    ),
+  getProductPerformanceStatistics: () =>
+    requests.get<ApiResponse<ProductPerformanceStatics[]>>(
+      "/charts/product-performance/statistics"
+    ),
+  getOrderFulfillment: () =>
+    requests.get<ApiResponse<OrderFulfillmentData[]>>(
+      "/charts/order-fulfillment"
+    ),
+  getConversionHistory: () =>
+    requests.get<ApiResponse<ConversionHistoryData[]>>(
+      "/charts/conversion-history"
+    ),
+  getOrderDistribution: () =>
+    requests.get<ApiResponse<OrderDistributionData[]>>(
+      "/charts/order-distribution"
+    ),
+  getSalesTrends: () =>
+    requests.get<ApiResponse<SalesData[]>>("/charts/sales-trends"),
+  getInventoryLevels: () =>
+    requests.get<ApiResponse<InventoryLevelData[]>>("/charts/inventory-levels"),
+  getVisitorInsights: () =>
+    requests.get<ApiResponse<VisitorInsightData[]>>("/charts/visitor-insights"),
 };
 
 const agent = {
   Auth,
+  Charts,
 };
 
 export default agent;
