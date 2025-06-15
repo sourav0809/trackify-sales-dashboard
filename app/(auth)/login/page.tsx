@@ -94,10 +94,10 @@ export default function LoginPage() {
         <div className="relative w-full h-full flex items-center justify-center p-12">
           <div className="text-white space-y-8 max-w-lg">
             <h1 className="text-5xl font-bold leading-tight">
-              Transform Your Business with Data Analytics
+              Transform Your Business with Trackify
             </h1>
             <p className="text-xl text-blue-100">
-              Make data-driven decisions with our powerful analytics dashboard
+              Make data-driven decisions with our powerful sales dashboard
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
               <div className="flex items-center space-x-4">

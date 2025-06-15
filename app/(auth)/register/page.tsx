@@ -80,7 +80,9 @@ export default function RegisterPage() {
       router.push(pathNames.dashboard);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const message = err.response?.data?.message || "Registration failed";
+        const message =
+          err.response?.data?.message ||
+          "Some error occurred. Registration failed";
         setFormError(message);
       } else {
         const message = "An unexpected error occurred";
@@ -98,10 +100,10 @@ export default function RegisterPage() {
         <div className="relative w-full h-full flex items-center justify-center p-12">
           <div className="text-white space-y-8 max-w-lg">
             <h1 className="text-5xl font-bold leading-tight">
-              Unlock the Power of Analytics
+              Unlock the Power of Trackify
             </h1>
             <p className="text-xl text-blue-100">
-              Join thousands of businesses making smarter decisions with data
+              Join thousands of teams growing smarter with real-time insights
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
               <div className="flex items-center space-x-4">
