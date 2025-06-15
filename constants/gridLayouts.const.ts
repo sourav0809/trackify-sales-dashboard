@@ -45,7 +45,7 @@ export const gridLayouts = {
     { i: "salesTrendsComposedChart", x: 0, y: 178, w: 12, h: 19 },
   ],
   sm: [
-    { i: "todayMetricsChart", x: 0, y: 0, w: 12, h: 24, minH: 20, minW: 12 },
+    { i: "todayMetricsChart", x: 0, y: 0, w: 12, h: 20, minH: 20, minW: 12 },
     { i: "visitorInsightChart", x: 0, y: 24, w: 12, h: 15, minH: 11, minW: 12 },
     { i: "userRegionChart", x: 0, y: 39, w: 12, h: 17, minH: 17, minW: 12 },
     { i: "revenueChart", x: 0, y: 56, w: 12, h: 15, minH: 15, minW: 10 },

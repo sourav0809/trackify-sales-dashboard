@@ -56,7 +56,7 @@ const TodayMetrics = () => {
         transition={{ duration: 0.5 }}
       >
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-1">
+          <h1 className="text-lg sm:text-3xl font-bold text-foreground mb-1">
             Today&apos;s Sales
           </h1>
           <p className="text-sm md:text-base text-muted-foreground">
@@ -97,19 +97,19 @@ const TodayMetrics = () => {
             whileTap={{ scale: 0.98 }}
           >
             <Card
-              className={`relative overflow-hidden border-0 shadow-sm max-h-[13rem] hover:shadow-md transition-all duration-300 ${metricsCardBgColors[index]}`}
+              className={`relative overflow-hidden border-0 shadow-sm max-h-[10rem] sm:max-h-[13rem] hover:shadow-md transition-all duration-300 ${metricsCardBgColors[index]}`}
             >
               {/* Icon */}
               <div className="absolute top-4 right-4 opacity-80">
                 <div
-                  className={`size-12 rounded-full ${metricsDataIconBgColors[index]} flex items-center justify-center`}
+                  className={`size-8 sm:size-12 rounded-full ${metricsDataIconBgColors[index]} flex items-center justify-center`}
                 >
                   {iconMap[index]}
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="space-y-3">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -119,7 +119,7 @@ const TodayMetrics = () => {
                       duration: 0.3,
                     }}
                   >
-                    <h3 className="text-3xl md:text-4xl font-bold text-foreground">
+                    <h3 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground">
                       {metric.value}
                     </h3>
                   </motion.div>

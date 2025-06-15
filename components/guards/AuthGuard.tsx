@@ -94,14 +94,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         dispatch(setUser({ token, user: userResponseData }));
 
         if (userResponseData?.preferences?.dashboardLayoutConfig) {
-          console.log("updating layout");
           dispatch(
             setDashboardLayout(
               userResponseData?.preferences?.dashboardLayoutConfig
             )
           );
         } else {
-          console.log("setting default layout");
           dispatch(setDashboardLayout(gridLayouts));
         }
 
