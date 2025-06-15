@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { LayoutDashboard, Layout, Menu, Trello } from "lucide-react";
+import { LayoutDashboard, Layout, Menu, Trello, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -37,10 +37,14 @@ const Sidebar = () => {
       <div className="fixed top-0 left-0 right-0 h-16 bg-white border-b z-50 sm:hidden">
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="absolute top-1/2 -translate-y-1/2 left-4 p-2 hover:bg-gray-100 rounded-md"
-          aria-label="Toggle Menu"
+          className="absolute top-1/2 -translate-y-1/2 left-4 p-2 hover:bg-gray-100 rounded-md transition-colors duration-200"
+          aria-label={isMobileOpen ? "Close Menu" : "Open Menu"}
         >
-          <Menu className="h-6 w-6" />
+          {isMobileOpen ? (
+            <X className="h-6 w-6 text-gray-600" />
+          ) : (
+            <Menu className="h-6 w-6 text-gray-600" />
+          )}
         </button>
       </div>
 
@@ -48,7 +52,7 @@ const Sidebar = () => {
         {/* Sidebar */}
         <aside
           className={cn(
-            "fixed top-0 h-screen bg-white border-r z-40 group/sidebar flex flex-col",
+            "fixed top-0 h-[calc(100dvh-4rem)] sm:h-screen bg-white border-r z-40 group/sidebar flex flex-col",
             // Mobile styles
             "mt-16 sm:mt-0",
             isMobileOpen ? "left-0 w-64" : "-left-full",

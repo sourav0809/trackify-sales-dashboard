@@ -9,7 +9,7 @@ const GridItem = ({
 }) => {
   return (
     <div
-      className={`border rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden h-full ${className}`}
+      className={` rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden h-full ${className}`}
     >
       <div className=" h-full flex items-center justify-center w-full">
         {children}
