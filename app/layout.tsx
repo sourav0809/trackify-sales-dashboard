@@ -16,6 +16,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Trackify",
   description: "Trackify is a platform for tracking and analyzing data",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
