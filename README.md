@@ -1,7 +1,6 @@
 # 📊 Trackify Sales Dashboard
 
-A fully responsive and dynamic analytics dashboard built with **Next.js**, **Tailwind CSS**, **ShadCN**, and **Redux Toolkit**, featuring real-time charts, user authentication, and layout customization.  
-The backend is powered by **Express**, **TypeScript**, and **PostgreSQL**, with CI/CD pipelines deployed on **AWS** using **GitHub Actions**.
+A fully responsive and modern analytics dashboard built with Next.js, Tailwind CSS, ShadCN, Redux Toolkit, featuring real-time charts, user authentication, and layout customization. The backend is powered by Express, TypeScript, and PostgreSQL, with CI/CD pipelines deployed on AWS using GitHub Actions.
 
 ---
 
