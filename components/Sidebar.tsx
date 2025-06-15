@@ -1,19 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { LayoutDashboard, Layout, Menu, Trello, LogOut } from "lucide-react";
+import { LayoutDashboard, Layout, Menu, Trello } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/common/ui/dialog";
 import LogOutConfirmationDialog from "./dialogs/LogOutConfirmationDialog";
 
 interface NavItem {

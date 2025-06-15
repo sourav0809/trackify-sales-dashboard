@@ -43,8 +43,8 @@ const LogOutConfirmationDialog = () => {
             Confirm Logout
           </DialogTitle>
           <DialogDescription className="text-base text-muted-foreground mt-3">
-            Are you sure you want to logout? You'll need to sign in again to
-            access your dashboard.
+            Are you sure you want to logout? You&apos;ll need to sign in again
+            to access your dashboard.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex gap-2 mt-6">
