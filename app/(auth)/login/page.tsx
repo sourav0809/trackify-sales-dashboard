@@ -51,7 +51,6 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form data
     const validationResult = validateForm(loginSchema, formData);
 
     if (!validationResult.success) {
@@ -64,21 +63,15 @@ export default function LoginPage() {
       setValidationErrors({});
       setFormError(null);
 
-      // Make API call using agent
       const response = await agent.Auth.login(formData);
 
-      // Store token in cookie
       Cookies.set("token", response?.data?.token, { expires: 7 });
 
-      // Update Redux state
       dispatch(
         setUser({ token: response?.data?.token, user: response?.data?.user })
       );
 
-      // Show success toast
       toast.success("Successfully logged in!");
-
-      // Redirect to dashboard
       router.push(pathNames.dashboard);
     } catch (err) {
       if (axios.isAxiosError(err)) {

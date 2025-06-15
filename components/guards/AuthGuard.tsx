@@ -28,11 +28,10 @@ import {
 } from "@/store/reducers/chartReducer";
 import agent from "@/agent/agent";
 import Cookies from "js-cookie";
-import Loader from "../Loader";
+import DashboardLoader from "../DashboardLoader";
 import { gridLayouts } from "@/constants/gridLayouts.const";
 import { pathNames } from "@/constants/pathname.const";
 import { toast } from "sonner";
-import { getErrorMessage } from "@/helpers/common";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -56,7 +55,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         dispatch(setDashboardLoading(true));
         dispatch(setChartLoading(true));
 
-        // Fetch user data and all chart data in parallel
         const [
           userResponse,
           revenueResponse,
@@ -93,7 +91,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
         const userResponseData = userResponse.data.user;
 
-        // Update user state
         dispatch(setUser({ token, user: userResponseData }));
 
         if (userResponseData?.preferences?.dashboardLayoutConfig) {
@@ -108,7 +105,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           dispatch(setDashboardLayout(gridLayouts));
         }
 
-        // Update chart state
         dispatch(setRevenueData(revenueResponse.data));
         dispatch(setMetricsData(metricsResponse.data));
         dispatch(setUserRegionData(userRegionResponse.data));
@@ -130,7 +126,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       } catch (error) {
         Cookies.remove("token");
         router.push(pathNames.login);
-        toast.error(getErrorMessage(error));
+        toast.error("Session Expired, please login again");
       } finally {
         dispatch(setDashboardLoading(false));
         dispatch(setChartLoading(false));
@@ -141,9 +137,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Show loading state while checking authentication
   if (dashboardLoading) {
-    return <Loader />;
+    return <DashboardLoader />;
   }
 
   if (!dashboardLoading && !isAuthenticated) {

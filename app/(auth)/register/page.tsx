@@ -26,7 +26,6 @@ export default function RegisterPage() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // Local state for form handling
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [formData, setFormData] = useState<RegisterFormData>({

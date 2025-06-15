@@ -14,8 +14,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Sales Dashboard",
-  description: "A modern sales analytics dashboard",
+  title: "Trackify",
+  description: "Trackify is a platform for tracking and analyzing data",
 };
 
 export default function RootLayout({
