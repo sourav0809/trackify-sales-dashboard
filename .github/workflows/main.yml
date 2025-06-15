@@ -44,6 +44,7 @@ jobs:
         run: |
           mkdir -p .next/standalone/.next
           mv .next/static .next/standalone/.next
+          cp -r public .next/standalone/public
 
       - name: Start Server
         run: npm run start:prod

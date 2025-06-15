@@ -35,13 +35,7 @@ export default function RootLayout({
       <body className={cn("min-h-screen bg-background antialiased")}>
         <ReduxProvider>
           {children}
-          <Toaster
-            position="top-right"
-            richColors
-            closeButton
-            expand
-            visibleToasts={6}
-          />
+          <Toaster position="top-right" richColors expand visibleToasts={6} />
         </ReduxProvider>
       </body>
     </html>

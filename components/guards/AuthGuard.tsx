@@ -124,7 +124,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       } catch (error) {
         Cookies.remove("token");
         router.push(pathNames.login);
-        toast.error("Session Expired, please login again");
+        toast.error(
+          "Session Expired or some error occurred, please login again"
+        );
         console.log(error);
       } finally {
         dispatch(setDashboardLoading(false));
