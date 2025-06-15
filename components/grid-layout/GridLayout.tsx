@@ -65,7 +65,7 @@ const GridLayout = ({
 
   return (
     <motion.div
-      className="w-full mx-auto p-4"
+      className="w-full mx-auto p-4 mt-16 sm:mt-0"
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{

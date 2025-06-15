@@ -92,7 +92,7 @@ const Page = () => {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
-        className={`fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-t border-border z-50 h-[4rem]`}
+        className={`fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-t border-border z-30 h-[4rem]`}
       >
         <div className="px-4 py-4 flex items-center sm:justify-end justify-center w-full">
           <div className="flex items-center gap-3">

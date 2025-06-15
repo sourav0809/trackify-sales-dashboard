@@ -67,10 +67,12 @@ export default function LoginPage() {
       const response = await agent.Auth.login(formData);
 
       // Store token in cookie
-      Cookies.set("token", response.token, { expires: 7 });
+      Cookies.set("token", response?.data?.token, { expires: 7 });
 
       // Update Redux state
-      dispatch(setUser({ token: response.token, user: response.user }));
+      dispatch(
+        setUser({ token: response?.data?.token, user: response?.data?.user })
+      );
 
       // Show success toast
       toast.success("Successfully logged in!");
