@@ -64,7 +64,15 @@ const GridLayout = ({
   };
 
   return (
-    <div className="w-full mx-auto p-4">
+    <motion.div
+      className="w-full mx-auto p-4"
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.5,
+        ease: "easeOut",
+      }}
+    >
       <ResponsiveGridLayout
         className="layout"
         layouts={layoutConfig}
@@ -89,7 +97,7 @@ const GridLayout = ({
           </motion.div>
         ))}
       </ResponsiveGridLayout>
-    </div>
+    </motion.div>
   );
 };
 
