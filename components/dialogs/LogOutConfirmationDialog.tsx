@@ -12,13 +12,14 @@ import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { pathNames } from "@/constants/pathname.const";
 
 const LogOutConfirmationDialog = () => {
   const router = useRouter();
 
   const handleLogout = () => {
     Cookies.remove("token");
-    router.push("/login");
+    router.push(pathNames.login);
   };
 
   return (

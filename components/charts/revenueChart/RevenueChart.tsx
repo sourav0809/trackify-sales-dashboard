@@ -9,10 +9,11 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import { ChartContainer, ChartTooltip } from "@/components/common/ui/chart";
-import { TrendingUp, TrendingDown } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { chartColors } from "@/constants/style.const";
+import RevenueChartTooltip from "./Tooltip";
+import RevenueChartLegend from "./Legend";
 
 const chartConfig = {
   onlineSales: {
@@ -88,7 +89,7 @@ const RevenueChart: React.FC = () => {
                   }}
                   tickFormatter={(value: number) => `${value / 1000}k`}
                 />
-                <ChartTooltip content={<CustomTooltipContent />} />
+                <ChartTooltip content={<RevenueChartTooltip />} />
                 <Bar
                   dataKey="onlineSales"
                   fill="var(--color-onlineSales)"
@@ -108,96 +109,9 @@ const RevenueChart: React.FC = () => {
       </div>
 
       {/* Legend */}
-      <motion.div
-        className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <CustomLegend />
-      </motion.div>
+      <RevenueChartLegend />
     </motion.div>
   );
 };
 
 export default RevenueChart;
-
-const CustomTooltipContent = ({
-  active,
-  payload,
-  label,
-}: {
-  active?: boolean;
-  payload?: { name: string; value: number }[];
-  label?: string;
-}) => {
-  if (!active || !payload?.length || !label) return null;
-
-  const total = payload.reduce((sum, item) => sum + item.value, 0);
-
-  return (
-    <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg p-4 min-w-[200px]">
-      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
-        <div className="w-2 h-2 rounded-full bg-primary"></div>
-        <span className="font-semibold text-foreground text-sm">{label}</span>
-      </div>
-      <div className="space-y-2">
-        {payload.map((item, index) => (
-          <div key={index} className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              {item.name === "onlineSales" ? (
-                <TrendingUp className="w-3 h-3 text-blue-500" />
-              ) : (
-                <TrendingDown className="w-3 h-3 text-emerald-400" />
-              )}
-              <span className="text-xs text-muted-foreground font-medium">
-                {item.name === "onlineSales" ? "Online Sales" : "Offline Sales"}
-              </span>
-            </div>
-            <span className="font-mono font-semibold text-foreground text-sm">
-              ${item.value.toLocaleString()}
-            </span>
-          </div>
-        ))}
-        <div className="flex items-center justify-between gap-4 pt-2 mt-2 border-t border-border">
-          <span className="text-xs font-semibold text-foreground">Total</span>
-          <span className="font-mono font-bold text-foreground text-sm">
-            ${total.toLocaleString()}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CustomLegend: React.FC = () => (
-  <motion.div
-    className="flex items-center justify-center gap-6 w-full text-xs sm:text-[0.8rem] h-full"
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.4, duration: 0.3 }}
-  >
-    <motion.div
-      className="flex items-center gap-2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.5 }}
-    >
-      <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-      <span className="text-sm text-muted-foreground font-medium">
-        Online Sales
-      </span>
-    </motion.div>
-    <motion.div
-      className="flex items-center gap-2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.6 }}
-    >
-      <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
-      <span className="text-sm text-muted-foreground font-medium">
-        Offline Sales
-      </span>
-    </motion.div>
-  </motion.div>
-);

@@ -30,6 +30,9 @@ import agent from "@/agent/agent";
 import Cookies from "js-cookie";
 import Loader from "../Loader";
 import { gridLayouts } from "@/constants/gridLayouts.const";
+import { pathNames } from "@/constants/pathname.const";
+import { toast } from "sonner";
+import { getErrorMessage } from "@/helpers/common";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -44,7 +47,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       const token = Cookies.get("token");
 
       if (!token) {
-        router.push("/login");
+        router.push(pathNames.login);
         dispatch(setDashboardLoading(false));
         return;
       }
@@ -126,8 +129,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         dispatch(setTopProducts(topProductsResponse.data));
       } catch (error) {
         Cookies.remove("token");
-        router.push("/login");
-        console.log(error);
+        router.push(pathNames.login);
+        toast.error(getErrorMessage(error));
       } finally {
         dispatch(setDashboardLoading(false));
         dispatch(setChartLoading(false));
@@ -135,6 +138,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     };
 
     validateAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Show loading state while checking authentication
@@ -143,7 +147,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   }
 
   if (!dashboardLoading && !isAuthenticated) {
-    router.push("/login");
+    router.push(pathNames.login);
     return null;
   }
 

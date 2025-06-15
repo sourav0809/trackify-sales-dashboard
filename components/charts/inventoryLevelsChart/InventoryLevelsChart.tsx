@@ -11,6 +11,8 @@ import {
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import InventoryLevelsChartTooltip from "./Tooltip";
+import InventoryLevelsChartLegend from "./Legend";
 
 const InventoryLevelsChart = () => {
   const inventoryData = useSelector(
@@ -81,7 +83,7 @@ const InventoryLevelsChart = () => {
                 }}
                 tickFormatter={(value: number) => `${value}`}
               />
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={<InventoryLevelsChartTooltip />} />
               <Area
                 type="monotone"
                 dataKey="currentStock"
@@ -111,93 +113,10 @@ const InventoryLevelsChart = () => {
         </motion.div>
 
         {/* Legend */}
-        <motion.div
-          className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <CustomLegend />
-        </motion.div>
+        <InventoryLevelsChartLegend />
       </div>
     </motion.div>
   );
 };
 
 export default InventoryLevelsChart;
-
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-}: {
-  active?: boolean;
-  payload?: {
-    name: string;
-    value: number;
-    color: string;
-  }[];
-  label?: string;
-}) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-xl animate-scale-in">
-        <p className="font-semibold text-foreground text-sm mb-2">{label}</p>
-        {payload.map(
-          (
-            entry: { name: string; value: number; color: string },
-            index: number
-          ) => (
-            <div key={index} className="flex items-center gap-3 mb-1 last:mb-0">
-              <div
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: entry.color }}
-              />
-              <div>
-                <span className="text-xs text-muted-foreground">
-                  {entry.name}:
-                  <span className="font-semibold text-foreground">
-                    {entry.value} units
-                  </span>
-                </span>
-              </div>
-            </div>
-          )
-        )}
-      </div>
-    );
-  }
-  return null;
-};
-
-const CustomLegend = () => (
-  <div className="flex flex-wrap justify-center gap-6 mt-4 pb-4">
-    <div className="flex items-center gap-2">
-      <div
-        className="w-3 h-3 rounded-full"
-        style={{ backgroundColor: "#3b82f6" }}
-      />
-      <span className="text-sm text-muted-foreground font-medium">
-        Current Stock
-      </span>
-    </div>
-    <div className="flex items-center gap-2">
-      <div
-        className="w-3 h-3 rounded-full"
-        style={{ backgroundColor: "#34d399" }}
-      />
-      <span className="text-sm text-muted-foreground font-medium">
-        Reorder Point
-      </span>
-    </div>
-    <div className="flex items-center gap-2">
-      <div
-        className="w-3 h-3 rounded-full"
-        style={{ backgroundColor: "#8b5cf6" }}
-      />
-      <span className="text-sm text-muted-foreground font-medium">
-        Safety Stock
-      </span>
-    </div>
-  </div>
-);

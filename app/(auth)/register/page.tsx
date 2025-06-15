@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { AUTH_COOKIE_NAME, AUTH_COOKIE_EXPIRES } from "@/constants/auth";
+import { pathNames } from "@/constants/pathname.const";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -77,7 +78,7 @@ export default function RegisterPage() {
       );
 
       toast.success("Account created successfully!");
-      router.push("/dashboard");
+      router.push(pathNames.dashboard);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const message = err.response?.data?.message || "Registration failed";
@@ -267,7 +268,7 @@ export default function RegisterPage() {
             <div className="text-sm text-center">
               <span className="text-gray-600">Already have an account? </span>
               <Link
-                href="/login"
+                href={pathNames.login}
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
                 Sign in here

@@ -3,21 +3,15 @@ import { ResponsiveContainer } from "recharts";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { chartColors } from "@/constants/style.const";
+import {
+  categoryColorsForTopProducts,
+  chartColors,
+} from "@/constants/style.const";
 
 const TopProducts = () => {
   const topProducts = useSelector(
     (state: RootState) => state.chart.topProducts
   );
-
-  // Map of colors for different categories
-  const categoryColors = {
-    Dresses: chartColors.primary,
-    Accessories: chartColors.secondary,
-    Bottoms: chartColors.tertiary,
-    Jewelry: chartColors.quaternary,
-    "Tops & T-Shirts": chartColors.quinary,
-  };
 
   return (
     <motion.div
@@ -71,8 +65,8 @@ const TopProducts = () => {
                           style={{
                             width: `${product.popularity}%`,
                             backgroundColor:
-                              categoryColors[
-                                product.category as keyof typeof categoryColors
+                              categoryColorsForTopProducts[
+                                product.category as keyof typeof categoryColorsForTopProducts
                               ] || chartColors.primary,
                           }}
                         />
@@ -83,13 +77,13 @@ const TopProducts = () => {
                         className="rounded-full px-3 py-1 text-xs font-medium"
                         style={{
                           backgroundColor: `${
-                            categoryColors[
-                              product.category as keyof typeof categoryColors
+                            categoryColorsForTopProducts[
+                              product.category as keyof typeof categoryColorsForTopProducts
                             ] || chartColors.primary
                           }15`,
                           color:
-                            categoryColors[
-                              product.category as keyof typeof categoryColors
+                            categoryColorsForTopProducts[
+                              product.category as keyof typeof categoryColorsForTopProducts
                             ] || chartColors.primary,
                         }}
                       >

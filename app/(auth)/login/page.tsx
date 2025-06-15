@@ -19,6 +19,7 @@ import { validateForm } from "@/lib/validations/helpers";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { pathNames } from "@/constants/pathname.const";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -78,7 +79,7 @@ export default function LoginPage() {
       toast.success("Successfully logged in!");
 
       // Redirect to dashboard
-      router.push("/dashboard");
+      router.push(pathNames.dashboard);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const message = err.response?.data?.message || "Login failed";
@@ -224,7 +225,7 @@ export default function LoginPage() {
                 Don&apos;t have an account?{" "}
               </span>
               <Link
-                href="/register"
+                href={pathNames.register}
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
                 Register here

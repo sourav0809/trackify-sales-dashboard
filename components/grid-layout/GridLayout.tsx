@@ -4,19 +4,19 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import GridItem from "./GridItem";
-import RevenueChart from "../charts/RevenueChart";
-import VisitorInsightsChart from "../charts/VisitorInsights";
-import TodayMetrics from "../charts/TodayMetrics";
-import UserRegionChart from "../charts/UserRegionChart";
-import ProductSalesCategoryChart from "../charts/ProductSalesCategoryChart";
-import InventoryLevelsChart from "../charts/InventoryLevelsChart";
-import OrderFulfillmentChart from "../charts/OrderFulfillmentChart";
-import ConversionFunnelChart from "../charts/ConversionFunnelChart";
-import TopProducts from "../charts/TopProducts";
-import OrderStatusDistributionChart from "../charts/OrderStatusDistributionChart";
-import ProductBubbleChart from "../charts/ProductBubbleChart";
-import ProductPerformanceRadarChart from "../charts/ProductPerformanceRadarChart";
-import SalesTrendsComposedChart from "../charts/SalesTrendsComposedChart";
+import RevenueChart from "../charts/revenueChart/RevenueChart";
+import VisitorInsightsChart from "../charts/visitorInsightsChart/VisitorInsightsChart";
+import TodayMetrics from "../cards/TodayMetrics";
+import UserRegionChart from "../charts/userRegionChart/UserRegionChart";
+import ProductSalesCategoryChart from "../charts/productSalesCategoryChart/ProductSalesCategoryChart";
+import InventoryLevelsChart from "../charts/inventoryLevelsChart/InventoryLevelsChart";
+import OrderFulfillmentChart from "../charts/orderFulfillmentChart/OrderFulfillmentChart";
+import ConversionFunnelChart from "../charts/conversionFunnelChart/ConversionFunnelChart";
+import TopProducts from "../cards/TopProducts";
+import OrderStatusDistributionChart from "../charts/orderStatusDistributionChart/OrderStatusDistributionChart";
+import ProductPerformanceBubbleChart from "../charts/productPerformanceBubbleChart/ProductPerformanceBubbleChart";
+import ProductPerformanceRadarChart from "../charts/productPerformanceRadarChart/ProductPerformanceRadarChart";
+import SalesTrendsComposedChart from "../charts/salesTrendsComposedChart/SalesTrendsComposedChart";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -29,7 +29,7 @@ const componentMap: Record<string, React.ReactElement> = {
   userRegionChart: <UserRegionChart />,
   revenueChart: <RevenueChart />,
   productSalesCategoryChart: <ProductSalesCategoryChart />,
-  productBubbleChart: <ProductBubbleChart />,
+  productBubbleChart: <ProductPerformanceBubbleChart />,
   inventoryLevelChart: <InventoryLevelsChart />,
   orderFulfillmentChart: <OrderFulfillmentChart />,
   conversionFunnelChart: <ConversionFunnelChart />,

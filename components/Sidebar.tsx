@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import LogOutConfirmationDialog from "./dialogs/LogOutConfirmationDialog";
+import { pathNames } from "@/constants/pathname.const";
 
 interface NavItem {
   icon: React.ReactElement;
@@ -16,12 +17,12 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     icon: <LayoutDashboard className="size-6" />,
-    href: "/dashboard",
+    href: pathNames.dashboard,
     label: "Dashboard",
   },
   {
     icon: <Layout className="size-6" />,
-    href: "/layout",
+    href: pathNames.layout,
     label: "Layout",
   },
 ];
@@ -58,7 +59,7 @@ const Sidebar = () => {
           {/* Logo */}
           <div className="h-16 flex items-center px-5 my-5">
             <div className="flex items-center text-blue-500">
-              <Trello className="h-8 w-8 shrink-0" />
+              <Trello className="size-8 shrink-0" />
               <span className="ml-3 font-semibold text-xl italic whitespace-nowrap sm:opacity-0 sm:group-hover/sidebar:opacity-100 sm:transition-opacity sm:duration-200">
                 Trackify
               </span>

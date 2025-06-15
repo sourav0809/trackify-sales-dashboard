@@ -29,3 +29,19 @@ export const regionColors = {
   canada: "hsl(276, 74%, 68%)", // Purple
   default: chartColors.primary, // Default color
 };
+
+// Map of colors for different categories
+export const categoryColorsForTopProducts = {
+  Dresses: chartColors.primary,
+  Accessories: chartColors.secondary,
+  Bottoms: chartColors.tertiary,
+  Jewelry: chartColors.quaternary,
+  "Tops & T-Shirts": chartColors.quinary,
+};
+
+export const orderStatusDistributionChartStatusColors = {
+  delivered: chartColors.primary,
+  returned: chartColors.secondary,
+  cancelled: chartColors.tertiary,
+  pending: chartColors.quaternary,
+};

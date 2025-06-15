@@ -13,9 +13,10 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { chartColors } from "@/constants/style.const";
-import { ProductPerFormanceData } from "@/types/charts.types";
+import ProductBubbleChartTooltip from "./Tooltip";
+import ProductBubbleChartLegend from "./Legend";
 
-const ProductBubbleChart = () => {
+const ProductPerformanceBubbleChart = () => {
   const productPerformanceData = useSelector(
     (state: RootState) => state.chart.productPerformance
   );
@@ -113,7 +114,11 @@ const ProductBubbleChart = () => {
                 name="Popularity"
               />
               <Tooltip
-                content={<CustomTooltip getProductColor={getProductColor} />}
+                content={
+                  <ProductBubbleChartTooltip
+                    getProductColor={getProductColor}
+                  />
+                }
               />
 
               {productPerformanceData.map((item, index) => (
@@ -135,7 +140,7 @@ const ProductBubbleChart = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <CustomLegend
+        <ProductBubbleChartLegend
           data={productPerformanceData}
           getProductColor={getProductColor}
         />
@@ -144,74 +149,4 @@ const ProductBubbleChart = () => {
   );
 };
 
-export default ProductBubbleChart;
-
-interface CustomLegendProps {
-  data: ProductPerFormanceData[];
-  getProductColor: (category: string) => string;
-}
-
-const CustomLegend: React.FC<CustomLegendProps> = ({
-  data,
-  getProductColor,
-}) => (
-  <div className="flex items-center justify-center gap-y-2 gap-x-3 sm:gap-x-4 sm:gap-y-3 mt-4 pb-4 flex-wrap">
-    {data.map((item) => (
-      <div key={item.category} className="flex items-center gap-2">
-        <div
-          className="w-3 h-3 rounded-full"
-          style={{ backgroundColor: getProductColor(item.category) }}
-        />
-        <span className="text-sm text-muted-foreground font-medium">
-          {item.category}
-        </span>
-      </div>
-    ))}
-  </div>
-);
-
-interface CustomTooltipProps {
-  active?: boolean;
-  payload?: Array<{
-    payload: ProductPerFormanceData;
-  }>;
-  getProductColor: (category: string) => string;
-}
-
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-4 shadow-xl animate-scale-in">
-        <p className="font-semibold text-foreground text-sm mb-2">
-          {data.name}
-        </p>
-        <div className="space-y-1">
-          <p className="text-xs text-muted-foreground">
-            Units Sold:{" "}
-            <span className="font-medium text-foreground">
-              {data.unitsSold.toLocaleString()}
-            </span>
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Revenue:{" "}
-            <span className="font-medium text-foreground">
-              ${data.revenue.toLocaleString()}
-            </span>
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Popularity:{" "}
-            <span className="font-medium text-foreground">
-              {data.popularity}%
-            </span>
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Category:{" "}
-            <span className="font-medium text-foreground">{data.category}</span>
-          </p>
-        </div>
-      </div>
-    );
-  }
-  return null;
-};
+export default ProductPerformanceBubbleChart;

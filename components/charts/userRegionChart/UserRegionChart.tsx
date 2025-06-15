@@ -4,7 +4,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { motion } from "framer-motion";
 import { RootState } from "@/store";
 import { regionColors } from "@/constants/style.const";
-import { UserRegionChartData } from "@/types/charts.types";
+import UserRegionChartTooltip from "./Tooltip";
+import UserRegionChartLegend from "./Legend";
 
 const UserRegionChart: React.FC = () => {
   const userRegionData = useSelector(
@@ -64,7 +65,7 @@ const UserRegionChart: React.FC = () => {
     >
       {/* Title */}
       <motion.div
-        className="flex items-center h-[4rem]"
+        className="flex items-center h-[4rem] pb-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -118,7 +119,9 @@ const UserRegionChart: React.FC = () => {
                 })}
               </Pie>
               <Tooltip
-                content={<CustomTooltip getRegionColor={getRegionColor} />}
+                content={
+                  <UserRegionChartTooltip getRegionColor={getRegionColor} />
+                }
               />
             </PieChart>
           </ResponsiveContainer>
@@ -137,76 +140,13 @@ const UserRegionChart: React.FC = () => {
         </motion.div>
 
         {/* Legend */}
-        <motion.div
-          className="h-[3rem] pt-2 pb-4 flex items-center justify-center"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <CustomLegend data={userRegionData} getRegionColor={getRegionColor} />
-        </motion.div>
+        <UserRegionChartLegend
+          data={userRegionData}
+          getRegionColor={getRegionColor}
+        />
       </div>
     </motion.div>
   );
 };
 
 export default UserRegionChart;
-
-interface CustomLegendProps {
-  data: UserRegionChartData[];
-  getRegionColor: (name: string) => string;
-}
-
-const CustomLegend: React.FC<CustomLegendProps> = ({
-  data,
-  getRegionColor,
-}) => (
-  <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-    {data.map((item, index) => (
-      <div key={index} className="flex items-center gap-2">
-        <div
-          className="w-3 h-3 rounded-full"
-          style={{ backgroundColor: getRegionColor(item.name) }}
-        />
-        <span className="text-sm text-muted-foreground font-medium">
-          {item.name}
-        </span>
-      </div>
-    ))}
-  </div>
-);
-
-interface CustomTooltipProps {
-  active?: boolean;
-  payload?: {
-    payload: UserRegionChartData;
-  }[];
-  getRegionColor: (name: string) => string;
-}
-
-const CustomTooltip: React.FC<CustomTooltipProps> = ({
-  active,
-  payload,
-  getRegionColor,
-}) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div className="bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-xl animate-scale-in">
-        <div className="flex items-center gap-3">
-          <div
-            className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: getRegionColor(data.name) }}
-          />
-          <div>
-            <p className="font-semibold text-foreground text-sm">{data.name}</p>
-            <p className="text-xs text-muted-foreground">
-              {data.value.toLocaleString()} visitors ({data.percentage}%)
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return null;
-};
