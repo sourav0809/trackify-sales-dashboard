@@ -20,6 +20,12 @@ const UserRegionChart: React.FC = () => {
     0
   );
 
+  // Add total to each data point for percentage calculation
+  const enrichedData = userRegionData.map((item) => ({
+    ...item,
+    total: totalVisitors,
+  }));
+
   const onPieEnter = (_: MouseEvent, index: number) => {
     setActiveIndex(index);
   };
@@ -82,11 +88,31 @@ const UserRegionChart: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
+          style={{ isolation: "isolate" }}
         >
-          <ResponsiveContainer width="100%" height="100%">
+          {/* Center Text */}
+          <div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ zIndex: 1 }}
+          >
+            <div className="text-center">
+              <p className="text-base font-bold text-foreground">
+                {totalVisitors.toLocaleString()}
+              </p>
+              <p className="text-sm text-muted-foreground font-medium mt-1">
+                Total Visitors
+              </p>
+            </div>
+          </div>
+
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            style={{ zIndex: 2, position: "relative" }}
+          >
             <PieChart>
               <Pie
-                data={userRegionData}
+                data={enrichedData}
                 cx="50%"
                 cy="50%"
                 innerRadius={radius.inner}
@@ -125,18 +151,6 @@ const UserRegionChart: React.FC = () => {
               />
             </PieChart>
           </ResponsiveContainer>
-
-          {/* Center Text */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="text-center">
-              <p className="text-base font-bold text-foreground">
-                {totalVisitors.toLocaleString()}
-              </p>
-              <p className="text-sm text-muted-foreground font-medium mt-1">
-                Total Visitors
-              </p>
-            </div>
-          </div>
         </motion.div>
 
         {/* Legend */}
