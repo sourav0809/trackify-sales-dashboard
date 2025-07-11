@@ -7,7 +7,7 @@ A fully responsive and modern analytics dashboard built with Next.js, Tailwind C
 ## 🚀 Live Demo
 
 - **Frontend:** [https://trackify.devsourav.online](https://trackify.devsourav.online)  
-- **Backend API:** [https://api.devsourav.online/api](https://api.devsourav.online/api)
+- **Backend API:** [https://api.devsourav.online/api]([https://api.devsourav.online/api](https://trackify-server.onrender.com/api](https://trackify-server.onrender.com/api))
 
 ---
 
@@ -16,12 +16,6 @@ A fully responsive and modern analytics dashboard built with Next.js, Tailwind C
 - **Frontend Repo:** [https://github.com/sourav0809/trackify-sales-dashboard](https://github.com/sourav0809/trackify-sales-dashboard)  
 - **Backend Repo:** [https://github.com/sourav0809/trackify-server](https://github.com/sourav0809/trackify-server)
 
-> You can create a new account or use the demo credentials below:
-
-```
-Email:    demoaccount@gmail.com  
-Password: Test@1234
-```
 
 ---
 
