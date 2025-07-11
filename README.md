@@ -7,7 +7,7 @@ A fully responsive and modern analytics dashboard built with Next.js, Tailwind C
 ## 🚀 Live Demo
 
 - **Frontend:** [https://trackify.devsourav.online](https://trackify.devsourav.online)  
-- **Backend API:** [https://api.devsourav.online/api]([https://api.devsourav.online/api](https://trackify-server.onrender.com/api](https://trackify-server.onrender.com/api))
+- **Backend API:** [https://trackify-server.onrender.com/api](https://trackify-server.onrender.com/api)
 
 ---
 
